@@ -27,7 +27,7 @@ void jogoDupla(char *j1, char *j2) {
 }
 
 void printSobre(){
-    printf("Projeto direcionado a disciplina de AED\n");
+    printf("Projeto direcionado a disciplina de AED - Jogo da forca\n");
     printf("Desenvolvedores\n");
     printf("Danilo Albuquerque de Melo:\t dam@cesar.school\n");
     printf("Paulo Montenegro Campos:\t pmc3@cesar.school\n");
