@@ -12,11 +12,36 @@ typedef struct Palavra {
 
 int main() {
     int op;
+    char nome1[50];
+    char nome2[50];
+
     do {
         menu();
         scanf("%d", &op);
         printf("\n");
         switch (op) {
+        case 1:
+            printf("Informe o seu nome: ");
+            scanf(" %[^\n]", nome1);
+            if (nome1[strlen(nome1) - 1] == '\n') {
+                nome1[strlen(nome1) - 1] = '\0';
+            }
+            jogoSolo(nome1);
+            break;
+        case 2:
+            printf("Informe o nome do primeiro jogador: ");
+            scanf(" %[^\n]", nome1);
+            if (nome1[strlen(nome1) - 1] == '\n') {
+                nome1[strlen(nome1) - 1] = '\0';
+            }
+            printf("\nInforme o nome do segundo jogador: ");
+            scanf(" %[^\n]", nome2);
+            if (nome2[strlen(nome2) - 1] == '\n') {
+                nome2[strlen(nome2) - 1] = '\0';
+            }
+            printf("\n");
+            jogoDupla(nome1, nome2);
+            break;
         case 3:
             printSobre();
             break;
