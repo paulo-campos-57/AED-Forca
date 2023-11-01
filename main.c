@@ -8,11 +8,12 @@ int main() {
     char nome1[50];
     char nome2[50];
     Palavra *palavras = NULL;
-
+    telaInicial();
+    printf("Seja bem-vindo!!!\n");
     do {
         menu();
         scanf("%d", &op);
-        printf("\n");
+        limpaTela();
         switch (op) {
         case 1:
             printf("Informe o seu nome: ");
@@ -48,6 +49,7 @@ int main() {
         }
         if (op != 0) {
             pausa();
+            limpaTela();
         }
     } while(op != 0);
     exit(EXIT_SUCCESS);

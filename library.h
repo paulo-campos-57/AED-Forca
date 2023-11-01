@@ -7,6 +7,8 @@ typedef struct Palavra {
     struct Palavra *next;
 } Palavra;
 
+void telaInicial();
+void limpaTela();
 void pausa();
 void menu();
 void jogoSolo(char *nome);

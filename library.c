@@ -3,6 +3,22 @@
 #include <string.h>
 #include "library.h"
 
+void telaInicial() {
+    printf(" __________    _________     _______     ________      _________\n");
+    printf("|  ________|  |  _____  |   |  ___  |   |  ______|    |  _____  |\n");
+    printf("| |______     | |     | |   | |___|_|   | |           | |     | |\n");
+    printf("|  ______|    | |     | |   |  __|      | |          | |_______| |\n");
+    printf("| |           | |     | |   | ||_|_     | |          |  _______  |\n");
+    printf("| |           | |_____| |   | |  |_|_   | |______    | |       | |\n");
+    printf("|_|           |_________|   |_|    |_|  |________|   |_|       |_|\n");
+    printf("\n");
+}
+
+void limpaTela() {
+    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+}
+
 void pausa() {
     printf("\n\nPressione ENTER para continuar...\n\n");
     while (getchar() != '\n');
@@ -36,6 +52,8 @@ void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
     scanf(" %[^\n]", d);
     adicionarPalavra(listaPalavras, pl, d);
     printf("Palavra adicionada!\n");
+    pausa();
+    limpaTela();
     int tentativas = 7;
     printf("%s, sua vez! tente acertar a palavra secreta!\n", j2);
     while (tentativas > 0) {
