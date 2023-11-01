@@ -3,6 +3,13 @@
 #include <string.h>
 #include "library.h"
 
+typedef struct Palavra {
+    char palavra[100];
+    char dica[150];
+    struct Palavra *next;
+} Palavra;
+
+
 int main() {
     int op;
     do {
