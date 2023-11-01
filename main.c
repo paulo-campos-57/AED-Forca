@@ -18,10 +18,7 @@ int main() {
         printf("\n");
         switch (op) {
         case 3:
-            printf("Projeto direcionado a disciplina de AED\n");
-            printf("Desenvolvedores\n");
-            printf("Danilo Albuquerque de Melo:\t dam@cesar.school\n");
-            printf("Paulo Montenegro Campos:\t pmc3@cesar.school\n");
+            printSobre();
             break;
         case 0:
             printf("Operacao encerrada\n");

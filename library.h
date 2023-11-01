@@ -3,5 +3,6 @@
 
 void pausa();
 void menu();
+void printSobre();
 
 #endif
