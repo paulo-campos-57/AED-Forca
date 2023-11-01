@@ -15,8 +15,11 @@ void telaInicial() {
 }
 
 void limpaTela() {
-    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    printf("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    #ifdef _WIN32
+    system("cls"); // No Windows
+    #else
+    printf("\033[H\033[J"); // Em sistemas Unix-like
+    #endif
 }
 
 void pausa() {
@@ -43,12 +46,14 @@ void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
     printf("Jogador 2: %s\n", j2);
     char pl[100];
     char d[150];
+    pausa();
+    limpaTela();
     printf("%s, informe a palavra secreta: ", j1);
     scanf(" %[^\n]", pl);
     if (pl[strlen(pl) - 1] == '\n') {
         pl[strlen(pl) - 1] = '\0';
     }
-    printf("\nagora informe a dica: ");
+    printf("\nAgora informe a dica: ");
     scanf(" %[^\n]", d);
     adicionarPalavra(listaPalavras, pl, d);
     printf("Palavra adicionada!\n");
@@ -64,7 +69,9 @@ void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
         char letra;
         scanf(" %c", &letra);
         tentativas--;
+        limpaTela();
     }
+    printf("A palavra era %s\n", pl);
     printf("%s não acertou a palavra, portanto, %s pontuou!\n", j2, j1);
 }
 

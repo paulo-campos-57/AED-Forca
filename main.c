@@ -4,6 +4,7 @@
 #include "library.h"
 
 int main() {
+    limpaTela();
     int op;
     char nome1[50];
     char nome2[50];
