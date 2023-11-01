@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "library.h"
 
 void pausa() {
@@ -20,10 +22,32 @@ void jogoSolo(char *nome) {
     desenhaForca();
 }
 
-void jogoDupla(char *j1, char *j2) {
+void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
     printf("Jogador 1: %s\n", j1);
     printf("Jogador 2: %s\n", j2);
-    desenhaForca();
+    char pl[100];
+    char d[150];
+    printf("%s, informe a palavra secreta: ", j1);
+    scanf(" %[^\n]", pl);
+    if (pl[strlen(pl) - 1] == '\n') {
+        pl[strlen(pl) - 1] = '\0';
+    }
+    printf("\nagora informe a dica: ");
+    scanf(" %[^\n]", d);
+    adicionarPalavra(listaPalavras, pl, d);
+    printf("Palavra adicionada!\n");
+    int tentativas = 7;
+    printf("%s, sua vez! tente acertar a palavra secreta!\n", j2);
+    while (tentativas > 0) {
+        desenhaForca();
+        printf("Dica: %s", d);
+        printf("\nTotal de tentativas: %d", tentativas);
+        printf("\nArrisque uma letra: ");
+        char letra;
+        scanf(" %c", &letra);
+        tentativas--;
+    }
+    printf("%s não acertou a palavra, portanto, %s pontuou!\n", j2, j1);
 }
 
 void printSobre(){
@@ -32,7 +56,6 @@ void printSobre(){
     printf("Danilo Albuquerque de Melo:\t dam@cesar.school\n");
     printf("Paulo Montenegro Campos:\t pmc3@cesar.school\n");
 }
-
 
 void desenhaForca() {
 
@@ -59,4 +82,16 @@ void desenhaForca() {
     }
     printf("\n");
 */
+}
+
+void adicionarPalavra(Palavra **palavras, char *pl, char *d) {
+    Palavra *novaPalavra = (Palavra *)malloc(sizeof(Palavra));
+    if (novaPalavra == NULL) {
+        printf("Erro na alocacao de memoria.\n");
+        exit(EXIT_FAILURE);
+    }
+    strcpy(novaPalavra -> palavra, pl);
+    strcpy(novaPalavra -> dica, d);
+    novaPalavra -> next = *palavras;
+    *palavras = novaPalavra;
 }

@@ -3,17 +3,11 @@
 #include <string.h>
 #include "library.h"
 
-typedef struct Palavra {
-    char palavra[100];
-    char dica[150];
-    struct Palavra *next;
-} Palavra;
-
-
 int main() {
     int op;
     char nome1[50];
     char nome2[50];
+    Palavra *palavras = NULL;
 
     do {
         menu();
@@ -40,7 +34,7 @@ int main() {
                 nome2[strlen(nome2) - 1] = '\0';
             }
             printf("\n");
-            jogoDupla(nome1, nome2);
+            jogoDupla(nome1, nome2, &palavras);
             break;
         case 3:
             printSobre();
