@@ -16,5 +16,7 @@ void jogoDupla(char *j1, char *j2, Palavra **listaPalavras);
 void printSobre();
 void desenhaForca();
 void adicionarPalavra(Palavra **palavras, char *pl, char *d);
+void trofeu();
+void caveira();
 
 #endif
