@@ -48,31 +48,55 @@ void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
     char d[150];
     pausa();
     limpaTela();
-    printf("%s, informe a palavra secreta: ", j1);
-    scanf(" %[^\n]", pl);
-    if (pl[strlen(pl) - 1] == '\n') {
-        pl[strlen(pl) - 1] = '\0';
-    }
-    printf("\nAgora informe a dica: ");
-    scanf(" %[^\n]", d);
-    adicionarPalavra(listaPalavras, pl, d);
-    printf("Palavra adicionada!\n");
-    pausa();
-    limpaTela();
-    int tentativas = 7;
-    printf("%s, sua vez! tente acertar a palavra secreta!\n", j2);
-    while (tentativas > 0) {
-        desenhaForca();
-        printf("Dica: %s", d);
-        printf("\nTotal de tentativas: %d", tentativas);
-        printf("\nArrisque uma letra: ");
-        char letra;
-        scanf(" %c", &letra);
-        tentativas--;
+    int vez = 1;
+    int j1Pontos = 0;
+    int j2Pontos = 0;
+    while (vez != 0) {
+        char *jogadorVez = NULL;
+        jogadorVez = (vez % 2 != 0) ? j1 : j2;
+        printf("%s, informe a palavra secreta: ", jogadorVez);
+        scanf(" %[^\n]", pl);
+        if (pl[strlen(pl) - 1] == '\n') {
+            pl[strlen(pl) - 1] = '\0';
+        }
+        printf("\nAgora informe a dica: ");
+        scanf(" %[^\n]", d);
+        adicionarPalavra(listaPalavras, pl, d);
+        printf("Palavra adicionada!\n");
+        pausa();
         limpaTela();
-    }
-    printf("A palavra era %s\n", pl);
-    printf("%s não acertou a palavra, portanto, %s pontuou!\n", j2, j1);
+        int tentativas = 7;
+        char *outroJogador = (vez % 2 != 0) ? j2 : j1;
+        printf("%s, sua vez! tente acertar a palavra secreta!\n", outroJogador);
+        while (tentativas > 0) {
+            desenhaForca();
+            printf("Pontuacao %s: %d\n", j1, j1Pontos);
+            printf("Pontuacao %s: %d\n", j2, j2Pontos);
+            printf("Dica: %s", d);
+            printf("\nTotal de tentativas: %d", tentativas);
+            printf("\nArrisque uma letra: ");
+            char letra;
+            scanf(" %c", &letra);
+            tentativas--;
+            limpaTela();
+        }
+        printf("A palavra era %s\n", pl);
+        if (vez %2 != 0) {
+            printf("%s não acertou a palavra, portanto, %s pontuou!\n", j2, j1);
+            j1Pontos++;
+        } else {
+            printf("%s não acertou a palavra, portanto, %s pontuou!\n", j1, j2);
+            j2Pontos++;
+        }
+        char continuar;
+        printf("\nDesejam continuar jogando?\n[S - sim/N - nao]\n");
+        scanf(" %c", &continuar);
+        if (continuar != 'S') {
+            break;
+        }
+        limpaTela();
+        vez++;
+    } 
 }
 
 void printSobre(){
