@@ -119,18 +119,6 @@ void desenhaForca() {
     printf(" |              \n");
     printf("_|___           \n");
     printf("\n\n");
-/*
-    for(int i = 0; i < strlen(palavrasecreta); i++) {
-
-        if(jachutou(palavrasecreta[i])) {
-            printf("%c ", palavrasecreta[i]);
-        } else {
-            printf("_ ");
-        }
-
-    }
-    printf("\n");
-*/
 }
 
 void adicionarPalavra(Palavra **palavras, char *pl, char *d) {
@@ -143,4 +131,40 @@ void adicionarPalavra(Palavra **palavras, char *pl, char *d) {
     strcpy(novaPalavra -> dica, d);
     novaPalavra -> next = *palavras;
     *palavras = novaPalavra;
+}
+
+void trofeu(){
+    printf("\nParabéns, você ganhou!\n\n");
+
+    printf("       ___________      \n");
+    printf("      '._==_==_=_.'     \n");
+    printf("      .-\\:      /-.    \n");
+    printf("     | (|:.     |) |    \n");
+    printf("      '-|:.     |-'     \n");
+    printf("        \\::.    /      \n");
+    printf("         '::. .'        \n");
+    printf("           ) (          \n");
+    printf("         _.' '._        \n");
+    printf("        '-------'       \n\n");
+}
+
+void caveira(){
+    printf("\nPuxa, você foi enforcado!\n");
+
+    printf("    _______________         \n");
+    printf("   /               \\       \n"); 
+    printf("  /                 \\      \n");
+    printf("//                   \\/\\  \n");
+    printf("\\|   XXXX     XXXX   | /   \n");
+    printf(" |   XXXX     XXXX   |/     \n");
+    printf(" |   XXX       XXX   |      \n");
+    printf(" |                   |      \n");
+    printf(" \\__      XXX      __/     \n");
+    printf("   |\\     XXX     /|       \n");
+    printf("   | |           | |        \n");
+    printf("   | I I I I I I I |        \n");
+    printf("   |  I I I I I I  |        \n");
+    printf("   \\_             _/       \n");
+    printf("     \\_         _/         \n");
+    printf("       \\_______/           \n");
 }
