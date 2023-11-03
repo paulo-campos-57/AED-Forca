@@ -45,7 +45,7 @@ void jogoSolo(char *nome) {
     Palavra *palavrasecreta = noAleatorio(palavras);
 
     printf("Seja bem-vindo, %s!\n", nome);
-    
+
     int erros = 0;
 
     char palavraAdivinhada[strlen(palavrasecreta->palavra) + 1];
@@ -53,7 +53,11 @@ void jogoSolo(char *nome) {
     memset(palavraAdivinhada, '_', strlen(palavrasecreta->palavra));
     palavraAdivinhada[strlen(palavrasecreta->palavra)] = '\0';
 
-    while (erros < MAX_ERROS) {
+    int acertos = 0;
+    int tamanhoPalavra = strlen(palavrasecreta->palavra);
+
+    while (erros < MAX_ERROS && acertos < tamanhoPalavra) {
+        printf("Sua dica: %s\n", palavrasecreta->dica);
         printf("Tente acertar a palavra secreta: %s\n", palavraAdivinhada);
         desenhaForca(erros);
         printf("\nArrisque uma letra: ");
@@ -62,20 +66,22 @@ void jogoSolo(char *nome) {
 
         if (adivinharLetra(palavrasecreta, palavraAdivinhada, letra)) {
             printf("Letra correta!\n");
+            acertos++;
         } else {
             printf("Letra incorreta!\n");
             erros++;
         }
 
         limpaTela();
+        if (strcmp(palavraAdivinhada, palavrasecreta->palavra) == 0) break; //ganhou
     }
 
-    if (erros >= MAX_ERROS) {
-        caveira(nome);
-    } else {
-        trofeu(nome);
-    }
+    if (erros >= MAX_ERROS) venceu(nome);
+
+    else perdeu(nome);
+    
 }
+
 
 
 void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
@@ -168,7 +174,7 @@ void adicionarPalavra(Palavra **palavras, char *pl, char *d) {
     *palavras = novaPalavra;
 }
 
-void trofeu(char *nome){
+void venceu(char *nome){
     printf("\nParabens %s, você ganhou!\n\n", nome);
 
     printf("       ___________      \n");
@@ -183,7 +189,7 @@ void trofeu(char *nome){
     printf("        '-------'       \n\n");
 }
 
-void caveira(char *nome){
+void perdeu(char *nome){
     printf("\nPuxa %s, você foi enforcado!\n\n", nome);
 
     printf("    _______________         \n");
@@ -232,9 +238,9 @@ Palavra *noAleatorio(Palavra *palavra) {
         printf("Lista vazia!\n");
         return NULL; // A lista está vazia.
     }
+    srand(time(NULL));
     
     int indiceAleatorio = rand() % tamanho;
-    
     for (int i = 0; i < indiceAleatorio; i++) {
         palavra = palavra->next;
     }
