@@ -1,12 +1,17 @@
 #ifndef __LIBRARY__
 #define __LIBRARY__
-#define TAMANHO_PALAVRA 20
+#define TAMANHO_PALAVRA 100
 #define MAX_ERROS 5
 typedef struct Palavra {
     char palavra[100];
     char dica[150];
     struct Palavra *next;
 } Palavra;
+
+typedef struct Caracteres {
+    char character;
+    struct Caracteres *next;
+}Caracteres;
 
 void telaInicial();
 void limpaTela();
@@ -24,5 +29,8 @@ void geraPalavrasOrdenada(Palavra **palavra);
 Palavra *noAleatorio(Palavra *palavra);
 void insertionSortList(Palavra **head);
 void imprimirLista(Palavra *lista);
-int adivinharLetra(Palavra *palavraSecreta, char *palavraAdivinhada, char letra);
+int adivinharLetra(Caracteres *caracter, char *palavraAdivinhada, char letra);
+void freeList(Palavra * palavra);
+void adicionaChar(Caracteres** head, char character);
+void imprimirP(Caracteres *lista);
 #endif

@@ -6,8 +6,7 @@
 int main() {
     limpaTela();
     int op;
-    char nome1[50];
-    char nome2[50];
+    char nome1[50], nome2[50];
     Palavra *palavras = NULL;
     telaInicial();
     printf("Seja bem-vindo!!!\n");

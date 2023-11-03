@@ -43,19 +43,18 @@ void jogoSolo(char *nome) {
     Palavra *palavras = NULL;
     geraPalavrasOrdenada(&palavras);
     Palavra *palavrasecreta = noAleatorio(palavras);
-
-    printf("Seja bem-vindo, %s!\n", nome);
-
-    int erros = 0;
+    Caracteres *caracter = NULL;
+    for (int i = 0; palavrasecreta->palavra[i] != '\0'; i++) {
+        adicionaChar(&caracter, palavrasecreta->palavra[i]);
+    }
 
     char palavraAdivinhada[strlen(palavrasecreta->palavra) + 1];
-
     memset(palavraAdivinhada, '_', strlen(palavrasecreta->palavra));
     palavraAdivinhada[strlen(palavrasecreta->palavra)] = '\0';
+    int erros = 0, acertos = 0, tamanhoPalavra = strlen(palavrasecreta->palavra);
 
-    int acertos = 0;
-    int tamanhoPalavra = strlen(palavrasecreta->palavra);
-
+    printf("Seja bem-vindo, %s!\n", nome);
+    imprimirP(caracter);
     while (erros < MAX_ERROS && acertos < tamanhoPalavra) {
         printf("Sua dica: %s\n", palavrasecreta->dica);
         printf("Tente acertar a palavra secreta: %s\n", palavraAdivinhada);
@@ -64,7 +63,7 @@ void jogoSolo(char *nome) {
         char letra;
         scanf(" %c", &letra);
 
-        if (adivinharLetra(palavrasecreta, palavraAdivinhada, letra)) {
+        if (adivinharLetra(caracter, palavraAdivinhada, letra)) {
             printf("Letra correta!\n");
             acertos++;
         } else {
@@ -73,16 +72,14 @@ void jogoSolo(char *nome) {
         }
 
         limpaTela();
-        if (strcmp(palavraAdivinhada, palavrasecreta->palavra) == 0) break; //ganhou
+        if (strcmp(palavraAdivinhada, palavrasecreta->palavra) == 0) 
+            break; //ganhou
     }
 
     if (erros >= MAX_ERROS) venceu(nome);
 
     else perdeu(nome);
-    
 }
-
-
 
 void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
     printf("Jogador 1: %s\n", j1);
@@ -221,12 +218,15 @@ int sizeList(Palavra * Palavra){
 
 void geraPalavrasOrdenada(Palavra **palavra) {
     adicionarPalavra(palavra, "programacao", "Trabalho muito legal");
-    adicionarPalavra(palavra, "ciencia", "Muito interessante");
     adicionarPalavra(palavra, "matematica", "Fundamental para a vida");
     adicionarPalavra(palavra, "informatica", "O futuro da humanidade");
     adicionarPalavra(palavra, "filosofia", "Pensamento e existencia");
     adicionarPalavra(palavra, "linguaPortuguesa", "A linguagem do nosso povo");
     adicionarPalavra(palavra, "geografia", "Do mundo ao nosso lar");
+    adicionarPalavra(palavra, "historia", "Tempos passados e presentes");
+    adicionarPalavra(palavra, "literatura", "Leitura eh vida");
+    adicionarPalavra(palavra, "biologia", "Vida no universo");
+    adicionarPalavra(palavra, "fisica", "Natureza e forca");
     //ordenando lista
     insertionSortList(palavra);
 }
@@ -272,7 +272,6 @@ void insertionSortList(Palavra **head) {
         }
         current = next;
     }
-
     *head = sorted;
 }
 
@@ -284,17 +283,57 @@ void imprimirLista(Palavra *lista) {
         lista = lista->next;
     }
 }
-
-int adivinharLetra(Palavra *palavraSecreta, char *palavraAdivinhada, char letra) {
+void imprimirP(Caracteres *lista) {
+    while (lista) {
+        printf("Palavra: %c\n", lista->character);
+        printf("\n");
+        lista = lista->next;
+    }
+}
+int adivinharLetra(Caracteres *caracter, char *palavraAdivinhada, char letra) {
     int correta = 0;
+    Caracteres *current = caracter;
+    int i = 0;
 
-    // Verifica se a letra fornecida corresponde a qualquer letra da palavra secreta.
-    for (int i = 0; palavraSecreta->palavra[i] != '\0'; i++) {
-        if (palavraSecreta->palavra[i] == letra) {
+    while (current != NULL) {
+        if (current->character == letra) {
             palavraAdivinhada[i] = letra;
             correta = 1;
         }
+        current = current->next;
+        i++;
     }
 
     return correta;
+}
+
+
+void freeList(Palavra * palavra) {
+    while (palavra) {
+        Palavra* temp =palavra;
+        palavra = palavra->next;
+        free(temp);
+    }
+}
+
+void adicionaChar(Caracteres** head, char character) {
+    Caracteres* newChar =(Caracteres*) malloc(sizeof(Caracteres));
+
+    if (newChar == NULL) {
+        // Handle memory allocation error
+        exit(EXIT_FAILURE);
+    }
+
+    newChar->character = character;
+    newChar->next = NULL;
+
+    if (*head == NULL) {
+        *head = newChar;
+    } else {
+         Caracteres* current = *head;
+        while (current->next != NULL) {
+            current = current->next;
+        }
+        current->next = newChar;
+    }
 }
