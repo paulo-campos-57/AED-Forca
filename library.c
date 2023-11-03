@@ -38,7 +38,18 @@ void menu() {
 
 void jogoSolo(char *nome) {
     printf("Seja bem vindo %s!\n", nome);
-    desenhaForca();
+    int tentativas = 7;
+    while (tentativas > 0) {
+        printf("Tente acertar a palavra secreta!\n");
+        desenhaForca();
+        printf("\nTotal de tentativas: %d", tentativas);
+        printf("\nArrisque uma letra: ");
+        char letra;
+        scanf(" %c", &letra);
+        tentativas--;
+        limpaTela();
+    }
+    caveira(nome);
 }
 
 void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
@@ -133,8 +144,8 @@ void adicionarPalavra(Palavra **palavras, char *pl, char *d) {
     *palavras = novaPalavra;
 }
 
-void trofeu(){
-    printf("\nParabéns, você ganhou!\n\n");
+void trofeu(char *nome){
+    printf("\nParabéns %s, você ganhou!\n\n", nome);
 
     printf("       ___________      \n");
     printf("      '._==_==_=_.'     \n");
@@ -148,8 +159,8 @@ void trofeu(){
     printf("        '-------'       \n\n");
 }
 
-void caveira(){
-    printf("\nPuxa, você foi enforcado!\n");
+void caveira(char *nome){
+    printf("\nPuxa %s, você foi enforcado!\n\n", nome);
 
     printf("    _______________         \n");
     printf("   /               \\       \n"); 
