@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "library.h"
+
+char palavrasecreta[TAMANHO_PALAVRA];
 
 void telaInicial() {
     printf(" __________    _________     _______     ________      _________\n");
@@ -37,20 +40,43 @@ void menu() {
 }
 
 void jogoSolo(char *nome) {
-    printf("Seja bem vindo %s!\n", nome);
-    int tentativas = 7;
-    while (tentativas > 0) {
-        printf("Tente acertar a palavra secreta!\n");
-        desenhaForca();
-        printf("\nTotal de tentativas: %d", tentativas);
+    Palavra *palavras = NULL;
+    geraPalavrasOrdenada(&palavras);
+    Palavra *palavrasecreta = noAleatorio(palavras);
+
+    printf("Seja bem-vindo, %s!\n", nome);
+    
+    int erros = 0;
+
+    char palavraAdivinhada[strlen(palavrasecreta->palavra) + 1];
+
+    memset(palavraAdivinhada, '_', strlen(palavrasecreta->palavra));
+    palavraAdivinhada[strlen(palavrasecreta->palavra)] = '\0';
+
+    while (erros < MAX_ERROS) {
+        printf("Tente acertar a palavra secreta: %s\n", palavraAdivinhada);
+        desenhaForca(erros);
         printf("\nArrisque uma letra: ");
         char letra;
         scanf(" %c", &letra);
-        tentativas--;
+
+        if (adivinharLetra(palavrasecreta, palavraAdivinhada, letra)) {
+            printf("Letra correta!\n");
+        } else {
+            printf("Letra incorreta!\n");
+            erros++;
+        }
+
         limpaTela();
     }
-    caveira(nome);
+
+    if (erros >= MAX_ERROS) {
+        caveira(nome);
+    } else {
+        trofeu(nome);
+    }
 }
+
 
 void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
     printf("Jogador 1: %s\n", j1);
@@ -80,7 +106,7 @@ void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
         char *outroJogador = (vez % 2 != 0) ? j2 : j1;
         printf("%s, sua vez! tente acertar a palavra secreta!\n", outroJogador);
         while (tentativas > 0) {
-            desenhaForca();
+            desenhaForca(0);
             printf("Pontuacao %s: %d\n", j1, j1Pontos);
             printf("Pontuacao %s: %d\n", j2, j2Pontos);
             printf("Dica: %s", d);
@@ -117,9 +143,7 @@ void printSobre(){
     printf("Paulo Montenegro Campos:\t pmc3@cesar.school\n");
 }
 
-void desenhaForca() {
-
-    int erros = 0;
+void desenhaForca(int erros) {
 
     printf("  _______       \n");
     printf(" |/      |      \n");
@@ -145,7 +169,7 @@ void adicionarPalavra(Palavra **palavras, char *pl, char *d) {
 }
 
 void trofeu(char *nome){
-    printf("\nParabéns %s, você ganhou!\n\n", nome);
+    printf("\nParabens %s, você ganhou!\n\n", nome);
 
     printf("       ___________      \n");
     printf("      '._==_==_=_.'     \n");
@@ -178,4 +202,93 @@ void caveira(char *nome){
     printf("   \\_             _/       \n");
     printf("     \\_         _/         \n");
     printf("       \\_______/           \n");
+}
+
+int sizeList(Palavra * Palavra){
+    int size = 0;
+    while(Palavra){
+        size++;
+        Palavra=Palavra->next;
+    }
+    return size;
+}
+
+void geraPalavrasOrdenada(Palavra **palavra) {
+    adicionarPalavra(palavra, "programacao", "Trabalho muito legal");
+    adicionarPalavra(palavra, "ciencia", "Muito interessante");
+    adicionarPalavra(palavra, "matematica", "Fundamental para a vida");
+    adicionarPalavra(palavra, "informatica", "O futuro da humanidade");
+    adicionarPalavra(palavra, "filosofia", "Pensamento e existencia");
+    adicionarPalavra(palavra, "linguaPortuguesa", "A linguagem do nosso povo");
+    adicionarPalavra(palavra, "geografia", "Do mundo ao nosso lar");
+    //ordenando lista
+    insertionSortList(palavra);
+}
+
+Palavra *noAleatorio(Palavra *palavra) {
+    int tamanho = sizeList(palavra);
+    
+    if (tamanho == 0) {
+        printf("Lista vazia!\n");
+        return NULL; // A lista está vazia.
+    }
+    
+    int indiceAleatorio = rand() % tamanho;
+    
+    for (int i = 0; i < indiceAleatorio; i++) {
+        palavra = palavra->next;
+    }
+    
+    return palavra;
+}
+
+void insertionSortList(Palavra **head) {
+
+    // A lista está vazia ou tem apenas um elemento, ou seja já está ordenada.
+    if (*head == NULL || (*head)->next == NULL) return; 
+    
+
+    Palavra *sorted = NULL; 
+
+    Palavra *current = *head;
+    while (current) {
+        Palavra *next = current->next;
+        if (sorted == NULL || strcmp(current->palavra, sorted->palavra) < 0) {
+            current->next = sorted;
+            sorted = current;
+        } else {
+            Palavra *temp = sorted;
+            while (temp->next != NULL && strcmp(current->palavra, temp->next->palavra) > 0) {
+                temp = temp->next;
+            }
+            current->next = temp->next;
+            temp->next = current;
+        }
+        current = next;
+    }
+
+    *head = sorted;
+}
+
+void imprimirLista(Palavra *lista) {
+    while (lista) {
+        printf("Palavra: %s\n", lista->palavra);
+        printf("Dica: %s\n", lista->dica);
+        printf("\n");
+        lista = lista->next;
+    }
+}
+
+int adivinharLetra(Palavra *palavraSecreta, char *palavraAdivinhada, char letra) {
+    int correta = 0;
+
+    // Verifica se a letra fornecida corresponde a qualquer letra da palavra secreta.
+    for (int i = 0; palavraSecreta->palavra[i] != '\0'; i++) {
+        if (palavraSecreta->palavra[i] == letra) {
+            palavraAdivinhada[i] = letra;
+            correta = 1;
+        }
+    }
+
+    return correta;
 }

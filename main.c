@@ -22,6 +22,7 @@ int main() {
             if (nome1[strlen(nome1) - 1] == '\n') {
                 nome1[strlen(nome1) - 1] = '\0';
             }
+
             jogoSolo(nome1);
             break;
         case 2:
