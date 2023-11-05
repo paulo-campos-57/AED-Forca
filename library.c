@@ -54,8 +54,8 @@ void jogoSolo(char *nome) {
     int erros = 0, acertos = 0, tamanhoPalavra = strlen(palavrasecreta->palavra);
 
     printf("Seja bem-vindo, %s!\n", nome);
-    imprimirP(caracter);
-    while (erros < MAX_ERROS && acertos < tamanhoPalavra) {
+
+    while (erros < MAX_ERROS) {
         printf("Sua dica: %s\n", palavrasecreta->dica);
         printf("Tente acertar a palavra secreta: %s\n", palavraAdivinhada);
         desenhaForca(erros);
@@ -70,15 +70,16 @@ void jogoSolo(char *nome) {
             printf("Letra incorreta!\n");
             erros++;
         }
-
         limpaTela();
-        if (strcmp(palavraAdivinhada, palavrasecreta->palavra) == 0) 
+        if (strcmp(palavraAdivinhada, palavrasecreta->palavra) == 0) {
+            venceu(nome);
             break; //ganhou
+        }
+        if (erros >= MAX_ERROS) {
+            perdeu(nome);
+            break;
+        }
     }
-
-    if (erros >= MAX_ERROS) venceu(nome);
-
-    else perdeu(nome);
 }
 
 void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
@@ -221,7 +222,7 @@ void geraPalavrasOrdenada(Palavra **palavra) {
     adicionarPalavra(palavra, "matematica", "Fundamental para a vida");
     adicionarPalavra(palavra, "informatica", "O futuro da humanidade");
     adicionarPalavra(palavra, "filosofia", "Pensamento e existencia");
-    adicionarPalavra(palavra, "linguaPortuguesa", "A linguagem do nosso povo");
+    adicionarPalavra(palavra, "Portugues", "A linguagem do brasil");
     adicionarPalavra(palavra, "geografia", "Do mundo ao nosso lar");
     adicionarPalavra(palavra, "historia", "Tempos passados e presentes");
     adicionarPalavra(palavra, "literatura", "Leitura eh vida");
