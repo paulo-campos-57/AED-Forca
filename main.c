@@ -53,5 +53,6 @@ int main() {
             limpaTela();
         }
     } while(op != 0);
+    freeList(palavras);
     exit(EXIT_SUCCESS);
 }

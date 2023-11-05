@@ -80,6 +80,9 @@ void jogoSolo(char *nome) {
             break;
         }
     }
+    freeList(palavras);
+    free(palavrasecreta);
+    freeCaracteres(caracter);
 }
 
 void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
@@ -317,6 +320,13 @@ void freeList(Palavra * palavra) {
     }
 }
 
+void freeCaracteres(Caracteres *c){
+    while (c) {
+        Caracteres* temp= c;
+        c = c -> next;
+        free(temp);
+    }
+}
 void adicionaChar(Caracteres** head, char character) {
     Caracteres* newChar =(Caracteres*) malloc(sizeof(Caracteres));
 

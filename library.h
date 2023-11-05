@@ -33,4 +33,5 @@ int adivinharLetra(Caracteres *caracter, char *palavraAdivinhada, char letra);
 void freeList(Palavra * palavra);
 void adicionaChar(Caracteres** head, char character);
 void imprimirP(Caracteres *lista);
+void freeCaracteres(Caracteres *c);
 #endif
