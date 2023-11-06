@@ -84,7 +84,6 @@ void jogoSolo(char *nome) {
         }
     }
     freeList(palavras);
-    free(palavrasecreta);
     freeCaracteres(caracter);
 }
 
@@ -290,6 +289,7 @@ void imprimirLista(Palavra *lista) {
         lista = lista->next;
     }
 }
+
 void imprimirP(Caracteres *lista) {
     while (lista) {
         printf("Palavra: %c\n", lista->character);
@@ -297,6 +297,7 @@ void imprimirP(Caracteres *lista) {
         lista = lista->next;
     }
 }
+
 int adivinharLetra(Caracteres *caracter, char *palavraAdivinhada, char letra) {
     int correta = 0;
     Caracteres *current = caracter;
@@ -314,7 +315,6 @@ int adivinharLetra(Caracteres *caracter, char *palavraAdivinhada, char letra) {
     return correta;
 }
 
-
 void freeList(Palavra * palavra) {
     while (palavra) {
         Palavra* temp =palavra;
@@ -330,6 +330,7 @@ void freeCaracteres(Caracteres *c){
         free(temp);
     }
 }
+
 void adicionaChar(Caracteres** head, char character) {
     Caracteres* newChar =(Caracteres*) malloc(sizeof(Caracteres));
 
