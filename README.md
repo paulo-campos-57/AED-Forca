@@ -1,7 +1,8 @@
 # AED-Forca
-Repositório direcionado ao projeto da disciplina de Algoritmo e Estrutura de Dados
+Repositório direcionado ao projeto da disciplina de Algoritmo e Estrutura de Dados;<br>
+Desenvolvido em linguagem C, compatível com sistemas Windows e Unix;
 
-# INSTRUÇÕES
+## INSTRUÇÕES
 - Para jogar o jogo, primeiro é necessário que você clone o repositório em sua máquina, através do comando:
 <dt> 
   
@@ -21,6 +22,32 @@ Repositório direcionado ao projeto da disciplina de Algoritmo e Estrutura de Da
 
 </dt>
 
-# DESENVOLVEDORES
-- <a href="https://github.com/dan-albuquerque" target="_blank">Danilo Albuquerque de Melo</a> - dam@cesar.school
-- <a href="https://github.com/paulo-campos-57" target="_blank">Paulo Montenegro Campos</a> - pmc3@cesar.school
+## DESENVOLVEDORES
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/dan-albuquerque">
+        <img src="https://avatars.githubusercontent.com/u/114592376?v=4" width="100px;" alt="Foto Danilo"/><br>
+        <sub>
+          <b>Danilo Melo</b>
+        </sub>
+        <br>
+        <sub>
+          dam@cesar.school
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/paulo-campos-57">
+        <img src="https://avatars.githubusercontent.com/u/77108503?v=4" width="100px;" alt="Foto Megas"/><br>
+        <sub>
+          <b>Paulo Campos</b>
+        </sub>
+        <br>
+        <sub>
+          pmc3@cesar.school
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
