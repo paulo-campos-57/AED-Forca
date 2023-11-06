@@ -157,10 +157,24 @@ void jogoSolo(char *nome) {
         scanf(" %c", &continuar);
         continuar = toupper(continuar);
         if (continuar != 'S') {
+            salvarPlacar(nome, pontuacao);
             break;
         }
         limpaTela();
     }
+}
+
+void salvarPlacar(const char *nome, int pontuacao) {
+    FILE *arquivo = fopen("placar.txt", "a"); 
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de placar.\n");
+        return;
+    }
+
+    fprintf(arquivo, "Nome: %s, Pontuação: %d\n", nome, pontuacao);
+
+    fclose(arquivo);
 }
 
 void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {

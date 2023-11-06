@@ -26,6 +26,7 @@ void venceu(char *nome);
 void perdeu(char *nome);
 // Funções de jogo
 void jogoSolo(char *nome);
+void salvarPlacar(const char *nome, int pontuacao);
 void jogoDupla(char *j1, char *j2, Palavra **listaPalavras);
 void adicionarPalavra(Palavra **palavras, char *pl, char *d);
 int sizeList(Palavra * Palavra);
