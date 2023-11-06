@@ -7,7 +7,6 @@ int main() {
     limpaTela();
     int op;
     char nome1[50], nome2[50];
-    Palavra *palavras = NULL;
     telaInicial();
     printf("Seja bem-vindo!!!\n");
     do {
@@ -36,7 +35,7 @@ int main() {
                 nome2[strlen(nome2) - 1] = '\0';
             }
             printf("\n");
-            jogoDupla(nome1, nome2, &palavras);
+            jogoDupla(nome1, nome2);
             break;
         case 3:
             printSobre();
@@ -53,6 +52,5 @@ int main() {
             limpaTela();
         }
     } while(op != 0);
-    freeList(palavras);
     exit(EXIT_SUCCESS);
 }

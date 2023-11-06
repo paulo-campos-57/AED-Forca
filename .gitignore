@@ -1,6 +1,8 @@
+placar.txt
+placar
+*.txt
 bin/*.exe
 teste.exe
 saida.exe
 teste
 saida
-*.txt

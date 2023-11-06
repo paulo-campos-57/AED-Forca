@@ -164,20 +164,7 @@ void jogoSolo(char *nome) {
     }
 }
 
-void salvarPlacar(const char *nome, int pontuacao) {
-    FILE *arquivo = fopen("placar.txt", "a"); 
-
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo de placar.\n");
-        return;
-    }
-
-    fprintf(arquivo, "Nome: %s, Pontuação: %d\n", nome, pontuacao);
-
-    fclose(arquivo);
-}
-
-void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
+void jogoDupla(char *j1, char *j2) {
     printf("Jogador 1: %s\n", j1);
     printf("Jogador 2: %s\n", j2);
     char pl[100];
@@ -189,51 +176,88 @@ void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
     int j2Pontos = 0;
     while (vez != 0) {
         char *jogadorVez = NULL;
+        Caracteres *caracter = NULL;
         jogadorVez = (vez % 2 != 0) ? j1 : j2;
         printf("%s, informe a palavra secreta: ", jogadorVez);
         scanf(" %[^\n]", pl);
+        
         if (pl[strlen(pl) - 1] == '\n') {
             pl[strlen(pl) - 1] = '\0';
         }
+        
+        for (int i = 0; pl[i] != '\0'; i++) {
+            adicionaChar(&caracter, pl[i]);
+        }
+        
+        char palavraAdivinhada[strlen(pl) + 1];
+        memset(palavraAdivinhada, '_', strlen(pl));
+        palavraAdivinhada[strlen(pl)] = '\0';
+        
         printf("\nAgora informe a dica: ");
         scanf(" %[^\n]", d);
-        adicionarPalavra(listaPalavras, pl, d);
         printf("Palavra adicionada!\n");
+        int erros = 0;
+        int acertos = 0;
+        int tamanhoPalavra = strlen(pl);
         pausa();
         limpaTela();
-        int tentativas = 7;
         char *outroJogador = (vez % 2 != 0) ? j2 : j1;
         printf("%s, sua vez! tente acertar a palavra secreta!\n", outroJogador);
-        while (tentativas > 0) {
-            desenhaForca(0);
+        while (erros < MAX_ERROS) {
+            desenhaForca(erros);
             printf("Pontuacao %s: %d\n", j1, j1Pontos);
             printf("Pontuacao %s: %d\n", j2, j2Pontos);
             printf("Dica: %s", d);
-            printf("\nTotal de tentativas: %d", tentativas);
             printf("\nArrisque uma letra: ");
             char letra;
             scanf(" %c", &letra);
-            tentativas--;
+            if (isalpha(letra)) {
+                letra = tolower(letra);
+            }
+            if (adivinharLetra(caracter, palavraAdivinhada, letra)) {
+                printf("Letra correta!\n");
+                acertos++;
+            } else {
+                printf("Letra incorreta!\n");
+                erros++;
+            }
+            sleep(1);
             limpaTela();
+            if (strcmp(palavraAdivinhada, pl) == 0) {
+                venceu(outroJogador);
+                break;
+            } else {
+                perdeu(outroJogador);
+                break;
+            }
         }
+        freeCaracteres(caracter);
         printf("A palavra era %s\n", pl);
-        if (vez %2 != 0) {
-            printf("%s não acertou a palavra, portanto, %s pontuou!\n", j2, j1);
-            j1Pontos++;
-        } else {
-            printf("%s não acertou a palavra, portanto, %s pontuou!\n", j1, j2);
-            j2Pontos++;
-        }
         char continuar;
         printf("\nDesejam continuar jogando?\n[S - sim/N - nao]\n");
         scanf(" %c", &continuar);
         continuar = toupper(continuar);
         if (continuar != 'S') {
+            salvarPlacar(j1, j1Pontos);
+            salvarPlacar(j2, j2Pontos);
             break;
         }
         limpaTela();
         vez++;
     } 
+}
+
+void salvarPlacar(const char *nome, int pontuacao) {
+    FILE *arquivo = fopen("placar.txt", "a"); 
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de placar.\n");
+        return;
+    }
+
+    fprintf(arquivo, "Nome: %s, Pontuação: %d\n", nome, pontuacao);
+
+    fclose(arquivo);
 }
 
 void adicionarPalavra(Palavra **palavras, char *pl, char *d) {
