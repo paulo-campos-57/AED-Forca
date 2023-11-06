@@ -1,6 +1,9 @@
 # AED-Forca
 Repositório direcionado ao projeto da disciplina de Algoritmo e Estrutura de Dados;<br>
-Desenvolvido em linguagem C, compatível com sistemas Windows e Unix;
+Desenvolvido em linguagem C, compatível com sistemas Unix e Windows;<br>
+<img align="center" alt="React" height="40" width="50" src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg">
+<img align="center" alt="Linux" height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg">
+<img align="center" alt="Linux" height="40" width="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg">
 
 ## INSTRUÇÕES
 - Para jogar o jogo, primeiro é necessário que você clone o repositório em sua máquina, através do comando:
