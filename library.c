@@ -102,50 +102,60 @@ void perdeu(char *nome){
 
 // Funções de jogo
 void jogoSolo(char *nome) {
-    Palavra *palavras = NULL;
-    geraPalavrasOrdenada(&palavras);
-    Palavra *palavrasecreta = noAleatorio(palavras);
-    Caracteres *caracter = NULL;
-    for (int i = 0; palavrasecreta->palavra[i] != '\0'; i++) {
-        adicionaChar(&caracter, palavrasecreta->palavra[i]);
-    }
-
-    char palavraAdivinhada[strlen(palavrasecreta->palavra) + 1];
-    memset(palavraAdivinhada, '_', strlen(palavrasecreta->palavra));
-    palavraAdivinhada[strlen(palavrasecreta->palavra)] = '\0';
-    int erros = 0, acertos = 0, tamanhoPalavra = strlen(palavrasecreta->palavra);
-
-    printf("Seja bem-vindo, %s!\n", nome);
-
-    while (erros < MAX_ERROS) {
-        printf("Sua dica: %s\n", palavrasecreta->dica);
-        printf("Tente acertar a palavra secreta: %s\n", palavraAdivinhada);
-        desenhaForca(erros);
-        printf("\nArrisque uma letra: ");
-        char letra;
-        scanf(" %c", &letra);
-        if (isalpha(letra)) {
-            letra = tolower(letra);
+    while (1) {   
+        Palavra *palavras = NULL;
+        geraPalavrasOrdenada(&palavras);
+        Palavra *palavrasecreta = noAleatorio(palavras);
+        Caracteres *caracter = NULL;
+        for (int i = 0; palavrasecreta->palavra[i] != '\0'; i++) {
+            adicionaChar(&caracter, palavrasecreta->palavra[i]);
         }
-        if (adivinharLetra(caracter, palavraAdivinhada, letra)) {
-            printf("Letra correta!\n");
-            acertos++;
-        } else {
-            printf("Letra incorreta!\n");
-            erros++;
+
+        char palavraAdivinhada[strlen(palavrasecreta->palavra) + 1];
+        memset(palavraAdivinhada, '_', strlen(palavrasecreta->palavra));
+        palavraAdivinhada[strlen(palavrasecreta->palavra)] = '\0';
+        int erros = 0, acertos = 0, tamanhoPalavra = strlen(palavrasecreta->palavra);
+
+        printf("Seja bem-vindo, %s!\n", nome);
+
+        while (erros < MAX_ERROS) {
+            printf("Sua dica: %s\n", palavrasecreta->dica);
+            printf("Tente acertar a palavra secreta: %s\n", palavraAdivinhada);
+            desenhaForca(erros);
+            printf("\nArrisque uma letra: ");
+            char letra;
+            scanf(" %c", &letra);
+            if (isalpha(letra)) {
+                letra = tolower(letra);
+            }
+            if (adivinharLetra(caracter, palavraAdivinhada, letra)) {
+                printf("Letra correta!\n");
+                acertos++;
+            } else {
+                printf("Letra incorreta!\n");
+                erros++;
+            }
+            limpaTela();
+            if (strcmp(palavraAdivinhada, palavrasecreta->palavra) == 0) {
+                venceu(nome);
+                break; //ganhou
+            }
+            if (erros >= MAX_ERROS) {
+                perdeu(nome);
+                break;
+            }
         }
-        limpaTela();
-        if (strcmp(palavraAdivinhada, palavrasecreta->palavra) == 0) {
-            venceu(nome);
-            break; //ganhou
-        }
-        if (erros >= MAX_ERROS) {
-            perdeu(nome);
+        freeList(palavras);
+        freeCaracteres(caracter);
+        char continuar;
+        printf("\nDesejam continuar jogando?\n[S - sim/N - nao]\n");
+        scanf(" %c", &continuar);
+        continuar = toupper(continuar);
+        if (continuar != 'S') {
             break;
         }
+        limpaTela();
     }
-    freeList(palavras);
-    freeCaracteres(caracter);
 }
 
 void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
@@ -198,6 +208,7 @@ void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
         char continuar;
         printf("\nDesejam continuar jogando?\n[S - sim/N - nao]\n");
         scanf(" %c", &continuar);
+        continuar = toupper(continuar);
         if (continuar != 'S') {
             break;
         }
