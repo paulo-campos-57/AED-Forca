@@ -3,3 +3,6 @@ teste.exe
 saida.exe
 teste
 saida
+bin/*.txt
+placar.txt
+placar
