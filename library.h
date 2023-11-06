@@ -2,6 +2,7 @@
 #define __LIBRARY__
 #define TAMANHO_PALAVRA 100
 #define MAX_ERROS 5
+
 typedef struct Palavra {
     char palavra[100];
     char dica[150];
