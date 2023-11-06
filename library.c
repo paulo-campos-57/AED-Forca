@@ -207,7 +207,8 @@ void jogoDupla(char *j1, char *j2) {
             desenhaForca(erros);
             printf("Pontuacao %s: %d\n", j1, j1Pontos);
             printf("Pontuacao %s: %d\n", j2, j2Pontos);
-            printf("Dica: %s", d);
+            printf("Dica: %s\n", d);
+            printf("\nTente acertar a palavra: %s\n", palavraAdivinhada);
             printf("\nArrisque uma letra: ");
             char letra;
             scanf(" %c", &letra);
@@ -225,9 +226,20 @@ void jogoDupla(char *j1, char *j2) {
             limpaTela();
             if (strcmp(palavraAdivinhada, pl) == 0) {
                 venceu(outroJogador);
+                if (vez %2 == 0) {
+                    j1Pontos++;
+                } else {
+                    j2Pontos++;
+                }
                 break;
-            } else {
+            }
+            if (erros >= MAX_ERROS) {
                 perdeu(outroJogador);
+                if (vez %2 == 0) {
+                    j2Pontos++;
+                } else {
+                    j1Pontos++;
+                }
                 break;
             }
         }

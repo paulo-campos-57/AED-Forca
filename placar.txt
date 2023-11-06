@@ -1,6 +1,0 @@
-Nome: dan, Pontuação: 1
-Nome: rochoso, Pontuação: 2
-Nome: pomodoro, Pontuação: 1
-Nome: chialem, Pontuação: 1
-Nome: rodeio, Pontuação: 0
-Nome: iptaye, Pontuação: 0
