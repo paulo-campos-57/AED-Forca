@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <ctype.h>
 #include "library.h"
 
 char palavrasecreta[TAMANHO_PALAVRA];
@@ -62,7 +63,9 @@ void jogoSolo(char *nome) {
         printf("\nArrisque uma letra: ");
         char letra;
         scanf(" %c", &letra);
-
+        if (isalpha(letra)) {
+            letra = tolower(letra);
+        }
         if (adivinharLetra(caracter, palavraAdivinhada, letra)) {
             printf("Letra correta!\n");
             acertos++;
@@ -225,7 +228,7 @@ void geraPalavrasOrdenada(Palavra **palavra) {
     adicionarPalavra(palavra, "matematica", "Fundamental para a vida");
     adicionarPalavra(palavra, "informatica", "O futuro da humanidade");
     adicionarPalavra(palavra, "filosofia", "Pensamento e existencia");
-    adicionarPalavra(palavra, "Portugues", "A linguagem do brasil");
+    adicionarPalavra(palavra, "portugues", "A linguagem do brasil");
     adicionarPalavra(palavra, "geografia", "Do mundo ao nosso lar");
     adicionarPalavra(palavra, "historia", "Tempos passados e presentes");
     adicionarPalavra(palavra, "literatura", "Leitura eh vida");
