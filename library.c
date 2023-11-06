@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
+#include <unistd.h>
 #include "library.h"
 
 char palavrasecreta[TAMANHO_PALAVRA];
@@ -102,7 +103,8 @@ void perdeu(char *nome){
 
 // Funções de jogo
 void jogoSolo(char *nome) {
-    while (1) {   
+    int pontuacao = 0;
+    while (1) {
         Palavra *palavras = NULL;
         geraPalavrasOrdenada(&palavras);
         Palavra *palavrasecreta = noAleatorio(palavras);
@@ -117,6 +119,7 @@ void jogoSolo(char *nome) {
         int erros = 0, acertos = 0, tamanhoPalavra = strlen(palavrasecreta->palavra);
 
         printf("Seja bem-vindo, %s!\n", nome);
+        printf("Sua pontuacao: %d\n", pontuacao);
 
         while (erros < MAX_ERROS) {
             printf("Sua dica: %s\n", palavrasecreta->dica);
@@ -135,9 +138,11 @@ void jogoSolo(char *nome) {
                 printf("Letra incorreta!\n");
                 erros++;
             }
+            sleep(1);
             limpaTela();
             if (strcmp(palavraAdivinhada, palavrasecreta->palavra) == 0) {
                 venceu(nome);
+                pontuacao++;
                 break; //ganhou
             }
             if (erros >= MAX_ERROS) {
