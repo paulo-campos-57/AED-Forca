@@ -7,17 +7,7 @@
 
 char palavrasecreta[TAMANHO_PALAVRA];
 
-void telaInicial() {
-    printf(" __________    _________     _______     ________      _________\n");
-    printf("|  ________|  |  _____  |   |  ___  |   |  ______|    |  _____  |\n");
-    printf("| |______     | |     | |   | |___|_|   | |           | |     | |\n");
-    printf("|  ______|    | |     | |   |  __|      | |          | |_______| |\n");
-    printf("| |           | |     | |   | ||_|_     | |          |  _______  |\n");
-    printf("| |           | |_____| |   | |  |_|_   | |______    | |       | |\n");
-    printf("|_|           |_________|   |_|    |_|  |________|   |_|       |_|\n");
-    printf("\n");
-}
-
+// Funções auxiliares
 void limpaTela() {
     #ifdef _WIN32
     system("cls"); // No Windows
@@ -31,6 +21,19 @@ void pausa() {
     while (getchar() != '\n');
     getchar();
 }
+/*---------------------------------------------------------------------------------------*/
+
+// Funções de interface
+void telaInicial() {
+    printf(" __________    _________     _______     ________      _________\n");
+    printf("|  ________|  |  _____  |   |  ___  |   |  ______|    |  _____  |\n");
+    printf("| |______     | |     | |   | |___|_|   | |           | |     | |\n");
+    printf("|  ______|    | |     | |   |  __|      | |          | |_______| |\n");
+    printf("| |           | |     | |   | ||_|_     | |          |  _______  |\n");
+    printf("| |           | |_____| |   | |  |_|_   | |______    | |       | |\n");
+    printf("|_|           |_________|   |_|    |_|  |________|   |_|       |_|\n");
+    printf("\n");
+}
 
 void menu() {
     printf("Selecione uma das opções e pressione ENTER\n");
@@ -40,6 +43,64 @@ void menu() {
     printf("0 - Sair\n");
 }
 
+void printSobre(){
+    printf("Projeto direcionado a disciplina de AED - Jogo da forca\n");
+    printf("Desenvolvedores\n");
+    printf("Danilo Albuquerque de Melo:\t dam@cesar.school\n");
+    printf("Paulo Montenegro Campos:\t pmc3@cesar.school\n");
+}
+
+void desenhaForca(int erros) {
+
+    printf("  _______       \n");
+    printf(" |/      |      \n");
+    printf(" |      %c%c%c  \n", (erros>=1?'(':' '), (erros>=1?'_':' '), (erros>=1?')':' '));
+    printf(" |      %c%c%c  \n", (erros>=3?'\\':' '), (erros>=2?'|':' '), (erros>=3?'/': ' '));
+    printf(" |       %c     \n", (erros>=2?'|':' '));
+    printf(" |      %c %c   \n", (erros>=4?'/':' '), (erros>=4?'\\':' '));
+    printf(" |              \n");
+    printf("_|___           \n");
+    printf("\n\n");
+}
+
+void venceu(char *nome){
+    printf("\nParabens %s, você ganhou!\n\n", nome);
+
+    printf("       ___________      \n");
+    printf("      '._==_==_=_.'     \n");
+    printf("      .-\\:      /-.    \n");
+    printf("     | (|:.     |) |    \n");
+    printf("      '-|:.     |-'     \n");
+    printf("        \\::.    /      \n");
+    printf("         '::. .'        \n");
+    printf("           ) (          \n");
+    printf("         _.' '._        \n");
+    printf("        '-------'       \n\n");
+}
+
+void perdeu(char *nome){
+    printf("\nPuxa %s, você foi enforcado!\n\n", nome);
+
+    printf("    _______________         \n");
+    printf("   /               \\       \n"); 
+    printf("  /                 \\      \n");
+    printf("//                   \\/\\  \n");
+    printf("\\|   XXXX     XXXX   | /   \n");
+    printf(" |   XXXX     XXXX   |/     \n");
+    printf(" |   XXX       XXX   |      \n");
+    printf(" |                   |      \n");
+    printf(" \\__      XXX      __/     \n");
+    printf("   |\\     XXX     /|       \n");
+    printf("   | |           | |        \n");
+    printf("   | I I I I I I I |        \n");
+    printf("   |  I I I I I I  |        \n");
+    printf("   \\_             _/       \n");
+    printf("     \\_         _/         \n");
+    printf("       \\_______/           \n");
+}
+/*---------------------------------------------------------------------------------------*/
+
+// Funções de jogo
 void jogoSolo(char *nome) {
     Palavra *palavras = NULL;
     geraPalavrasOrdenada(&palavras);
@@ -145,26 +206,6 @@ void jogoDupla(char *j1, char *j2, Palavra **listaPalavras) {
     } 
 }
 
-void printSobre(){
-    printf("Projeto direcionado a disciplina de AED - Jogo da forca\n");
-    printf("Desenvolvedores\n");
-    printf("Danilo Albuquerque de Melo:\t dam@cesar.school\n");
-    printf("Paulo Montenegro Campos:\t pmc3@cesar.school\n");
-}
-
-void desenhaForca(int erros) {
-
-    printf("  _______       \n");
-    printf(" |/      |      \n");
-    printf(" |      %c%c%c  \n", (erros>=1?'(':' '), (erros>=1?'_':' '), (erros>=1?')':' '));
-    printf(" |      %c%c%c  \n", (erros>=3?'\\':' '), (erros>=2?'|':' '), (erros>=3?'/': ' '));
-    printf(" |       %c     \n", (erros>=2?'|':' '));
-    printf(" |      %c %c   \n", (erros>=4?'/':' '), (erros>=4?'\\':' '));
-    printf(" |              \n");
-    printf("_|___           \n");
-    printf("\n\n");
-}
-
 void adicionarPalavra(Palavra **palavras, char *pl, char *d) {
     Palavra *novaPalavra = (Palavra *)malloc(sizeof(Palavra));
     if (novaPalavra == NULL) {
@@ -175,42 +216,6 @@ void adicionarPalavra(Palavra **palavras, char *pl, char *d) {
     strcpy(novaPalavra -> dica, d);
     novaPalavra -> next = *palavras;
     *palavras = novaPalavra;
-}
-
-void venceu(char *nome){
-    printf("\nParabens %s, você ganhou!\n\n", nome);
-
-    printf("       ___________      \n");
-    printf("      '._==_==_=_.'     \n");
-    printf("      .-\\:      /-.    \n");
-    printf("     | (|:.     |) |    \n");
-    printf("      '-|:.     |-'     \n");
-    printf("        \\::.    /      \n");
-    printf("         '::. .'        \n");
-    printf("           ) (          \n");
-    printf("         _.' '._        \n");
-    printf("        '-------'       \n\n");
-}
-
-void perdeu(char *nome){
-    printf("\nPuxa %s, você foi enforcado!\n\n", nome);
-
-    printf("    _______________         \n");
-    printf("   /               \\       \n"); 
-    printf("  /                 \\      \n");
-    printf("//                   \\/\\  \n");
-    printf("\\|   XXXX     XXXX   | /   \n");
-    printf(" |   XXXX     XXXX   |/     \n");
-    printf(" |   XXX       XXX   |      \n");
-    printf(" |                   |      \n");
-    printf(" \\__      XXX      __/     \n");
-    printf("   |\\     XXX     /|       \n");
-    printf("   | |           | |        \n");
-    printf("   | I I I I I I I |        \n");
-    printf("   |  I I I I I I  |        \n");
-    printf("   \\_             _/       \n");
-    printf("     \\_         _/         \n");
-    printf("       \\_______/           \n");
 }
 
 int sizeList(Palavra * Palavra){
@@ -258,7 +263,6 @@ void insertionSortList(Palavra **head) {
 
     // A lista está vazia ou tem apenas um elemento, ou seja já está ordenada.
     if (*head == NULL || (*head)->next == NULL) return; 
-    
 
     Palavra *sorted = NULL; 
 
@@ -352,3 +356,4 @@ void adicionaChar(Caracteres** head, char character) {
         current->next = newChar;
     }
 }
+/*---------------------------------------------------------------------------------------*/

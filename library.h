@@ -11,19 +11,22 @@ typedef struct Palavra {
 typedef struct Caracteres {
     char character;
     struct Caracteres *next;
-}Caracteres;
+} Caracteres;
 
-void telaInicial();
+// Funções auxiliares
 void limpaTela();
 void pausa();
+// Funções de interface
+void telaInicial();
 void menu();
-void jogoSolo(char *nome);
-void jogoDupla(char *j1, char *j2, Palavra **listaPalavras);
 void printSobre();
 void desenhaForca(int erros);
+void venceu(char *nome);
+void perdeu(char *nome);
+// Funções de jogo
+void jogoSolo(char *nome);
+void jogoDupla(char *j1, char *j2, Palavra **listaPalavras);
 void adicionarPalavra(Palavra **palavras, char *pl, char *d);
-void venceu();
-void perdeu();
 int sizeList(Palavra * Palavra);
 void geraPalavrasOrdenada(Palavra **palavra);
 Palavra *noAleatorio(Palavra *palavra);
