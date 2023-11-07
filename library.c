@@ -268,7 +268,7 @@ void salvarPlacar(const char *nome, int pontuacao) {
         return;
     }
 
-    fprintf(arquivo, "Nome: %s, Pontuação: %d\n", nome, pontuacao);
+    fprintf(arquivo, "Nome: %s, Pontuacao: %d\n", nome, pontuacao);
 
     fclose(arquivo);
 }
@@ -454,7 +454,7 @@ void lideres() {
 
     int loop = 0;
     
-    while (fscanf(arquivo, "Nome: %s, Pontuação: %d\n", dados[loop].nome, &dados[loop].pontuacao) == 2) {
+    while (fscanf(arquivo, "Nome: %s, Pontuacao: %d\n", dados[loop].nome, &dados[loop].pontuacao) == 2) {
         loop++;
 
         if (loop >= capacidade) {
