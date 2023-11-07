@@ -40,7 +40,8 @@ void menu() {
     printf("Selecione uma das opções e pressione ENTER\n");
     printf("1 - Jogar sozinho\n");
     printf("2 - Jogar em dupla\n");
-    printf("3 - Sobre o jogo\n");
+    printf("3 - Placares de lideres\n");
+    printf("4 - Sobre o jogo\n");
     printf("0 - Sair\n");
 }
 
@@ -304,6 +305,9 @@ void geraPalavrasOrdenada(Palavra **palavra) {
     adicionarPalavra(palavra, "literatura", "Leitura eh vida");
     adicionarPalavra(palavra, "biologia", "Vida no universo");
     adicionarPalavra(palavra, "fisica", "Natureza e forca");
+    adicionarPalavra(palavra, "bubblesort", "Ordenacao das bolhas");
+    adicionarPalavra(palavra, "paralelepipedo", "Forma geometrica");
+    adicionarPalavra(palavra, "dados", "Juntos constituem informacao");
     //ordenando lista
     insertionSortList(palavra);
 }
@@ -423,3 +427,54 @@ void adicionaChar(Caracteres** head, char character) {
     }
 }
 /*---------------------------------------------------------------------------------------*/
+
+// Funções de pontuação
+int compara(const void *a, const void *b) {
+    Info *infoA = (Info *)a;
+    Info *infoB = (Info *)b;
+    return infoA -> pontuacao - infoB -> pontuacao;
+}
+
+void lideres() {
+    FILE *arquivo = fopen("placar.txt", "r");
+
+    if (arquivo == NULL) {
+        perror("Erro ao abrir o arquivo.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    Info *dados = NULL;
+    int capacidade = 10;
+
+    dados = (Info *)malloc(capacidade * sizeof(Info));
+    if (dados == NULL) {
+        perror("Erro ao alocar memoria.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    int loop = 0;
+    
+    while (fscanf(arquivo, "Nome: %s, Pontuação: %d\n", dados[loop].nome, &dados[loop].pontuacao) == 2) {
+        loop++;
+
+        if (loop >= capacidade) {
+            capacidade *= 2;
+            dados = (Info *)realloc(dados, capacidade * sizeof(Info));
+            if (dados == NULL) {
+                perror("Erro ao realocar memoria.\n");
+                exit(EXIT_FAILURE);
+            }
+        }
+    }
+
+    fclose(arquivo);
+
+    qsort(dados, loop, sizeof(Info), compara);
+
+    printf("Ranking de jogadores\n");
+    for (int i = 0; i < loop; i++) {
+        printf("Nome: %s, Pontuacao: %d\n", dados[i].nome, dados[i].pontuacao);
+    }
+
+    free(dados);
+}

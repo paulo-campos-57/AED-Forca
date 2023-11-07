@@ -38,6 +38,9 @@ int main() {
             jogoDupla(nome1, nome2);
             break;
         case 3:
+            lideres();
+            break;
+        case 4:
             printSobre();
             break;
         case 0:

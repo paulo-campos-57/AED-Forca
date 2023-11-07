@@ -14,6 +14,11 @@ typedef struct Caracteres {
     struct Caracteres *next;
 } Caracteres;
 
+typedef struct Info {
+    char nome[50];
+    int pontuacao;
+} Info;
+
 // Funções auxiliares
 void limpaTela();
 void pausa();
@@ -39,4 +44,7 @@ void freeList(Palavra * palavra);
 void adicionaChar(Caracteres** head, char character);
 void imprimirP(Caracteres *lista);
 void freeCaracteres(Caracteres *c);
+// Funções de pontuação
+int compara(const void *a, const void *b);
+void lideres();
 #endif
