@@ -328,7 +328,7 @@ void geraPalavrasOrdenada(Palavra **palavra) {
     adicionarPalavra(palavra, "portugol", "Pseudolinguagem introdutoria");
     adicionarPalavra(palavra, "lovelace", "Mulher muito importante para a computacao");
     //ordenando lista
-    insertionSortList(palavra);
+    quickSortList(palavra);
 }
 
 Palavra *noAleatorio(Palavra *palavra) {
@@ -348,31 +348,81 @@ Palavra *noAleatorio(Palavra *palavra) {
     return palavra;
 }
 
-void insertionSortList(Palavra **head) {
-
-    // A lista está vazia ou tem apenas um elemento, ou seja já está ordenada.
-    if (*head == NULL || (*head)->next == NULL) return; 
-
-    Palavra *sorted = NULL; 
-
-    Palavra *current = *head;
-    while (current) {
-        Palavra *next = current->next;
-        if (sorted == NULL || strcmp(current->palavra, sorted->palavra) < 0) {
-            current->next = sorted;
-            sorted = current;
-        } else {
-            Palavra *temp = sorted;
-            while (temp->next != NULL && strcmp(current->palavra, temp->next->palavra) > 0) {
-                temp = temp->next;
-            }
-            current->next = temp->next;
-            temp->next = current;
-        }
-        current = next;
-    }
-    *head = sorted;
+void swap(Palavra* a, Palavra* b) {
+    char temp[TAMANHO_PALAVRA]; 
+    strcpy(temp, a->palavra);
+    strcpy(a->palavra, b->palavra);
+    strcpy(b->palavra, temp);
 }
+
+Palavra* partition(Palavra* head, Palavra* end, Palavra** newHead, Palavra** newEnd) {
+    Palavra* pivot = end;
+    Palavra* prev = NULL, *cur = head, *tail = pivot;
+
+    while (cur != pivot) {
+        if (strcmp(cur->palavra, pivot->palavra) < 0) {
+            if (*newHead == NULL)
+                *newHead = cur;
+
+            prev = cur;
+            cur = cur->next;
+        }
+        else {
+            if (prev)
+                prev->next = cur->next;
+
+            Palavra* tmp = cur->next;
+            cur->next = NULL;
+            tail->next = cur;
+            tail = cur;
+            cur = tmp;
+        }
+    }
+
+    if (*newHead == NULL)
+        *newHead = pivot;
+
+    *newEnd = tail;
+
+    return pivot;
+}
+
+Palavra* quickSortRecur(Palavra* head, Palavra* end) {
+    if (!head || head == end) return head;
+
+    Palavra* newHead = NULL, *newEnd = NULL;
+
+    Palavra* pivot = partition(head, end, &newHead, &newEnd);
+
+    if (newHead != pivot) {
+        Palavra* tmp = newHead;
+        while (tmp->next != pivot){
+            tmp = tmp->next;
+        }
+        tmp->next = NULL;
+
+        newHead = quickSortRecur(newHead, tmp);
+
+        tmp = getTail(newHead);
+        tmp->next = pivot;
+    }
+
+    pivot->next = quickSortRecur(pivot->next, newEnd);
+
+    return newHead;
+}
+
+Palavra* getTail(Palavra* head) {
+    while (head != NULL && head->next != NULL){
+        head = head->next;
+    }
+    return head;
+}
+
+void quickSortList(Palavra** head) {
+    *head = quickSortRecur(*head, getTail(*head));
+}
+
 
 void imprimirLista(Palavra *lista) {
     while (lista) {
@@ -404,7 +454,6 @@ int adivinharLetra(Caracteres *caracter, char *palavraAdivinhada, char letra) {
         current = current->next;
         i++;
     }
-
     return correta;
 }
 
