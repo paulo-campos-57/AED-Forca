@@ -47,7 +47,7 @@ void menu() {
 
 void printSobre(){
     printf("Projeto direcionado a disciplina de AED - Jogo da forca\n");
-    printf("Desenvolvedores\n");
+    printf("Desenvolvido em linguagem C, por:\n");
     printf("Danilo Albuquerque de Melo:\t dam@cesar.school\n");
     printf("Paulo Montenegro Campos:\t pmc3@cesar.school\n");
 }
@@ -88,17 +88,17 @@ void perdeu(char *nome){
     printf("  /                 \\      \n");
     printf("//                   \\/\\  \n");
     printf("\\|   XXXX     XXXX   | /   \n");
-    printf(" |   XXXX     XXXX   |/     \n");
-    printf(" |   XXX       XXX   |      \n");
-    printf(" |                   |      \n");
-    printf(" \\__      XXX      __/     \n");
-    printf("   |\\     XXX     /|       \n");
+    printf(" |   XXXX     XXXX    |/     \n");
+    printf(" |   XXX       XXX    |      \n");
+    printf(" |                    |      \n");
+    printf(" \\__     XXX      __/     \n");
+    printf("   |\\    XXX     /|       \n");
     printf("   | |           | |        \n");
     printf("   | I I I I I I I |        \n");
     printf("   |  I I I I I I  |        \n");
-    printf("   \\_             _/       \n");
-    printf("     \\_         _/         \n");
-    printf("       \\_______/           \n");
+    printf("   \\_            _/       \n");
+    printf("     \\_        _/         \n");
+    printf("       \\______/           \n");
 }
 /*---------------------------------------------------------------------------------------*/
 
@@ -148,13 +148,14 @@ void jogoSolo(char *nome) {
             }
             if (erros >= MAX_ERROS) {
                 perdeu(nome);
+                printf("\n\nA palavra era %s\n", palavrasecreta -> palavra);
                 break;
             }
         }
         freeList(palavras);
         freeCaracteres(caracter);
         char continuar;
-        printf("\nDesejam continuar jogando?\n[S - sim/N - nao]\n");
+        printf("\nDeseja continuar jogando?\n[S - sim/N - nao]\n");
         scanf(" %c", &continuar);
         continuar = toupper(continuar);
         if (continuar != 'S') {
@@ -305,9 +306,27 @@ void geraPalavrasOrdenada(Palavra **palavra) {
     adicionarPalavra(palavra, "literatura", "Leitura eh vida");
     adicionarPalavra(palavra, "biologia", "Vida no universo");
     adicionarPalavra(palavra, "fisica", "Natureza e forca");
-    adicionarPalavra(palavra, "bubblesort", "Ordenacao das bolhas");
     adicionarPalavra(palavra, "paralelepipedo", "Forma geometrica");
     adicionarPalavra(palavra, "dados", "Juntos constituem informacao");
+    adicionarPalavra(palavra, "bubblesort", "Ordenacao das bolhas");
+    adicionarPalavra(palavra, "selectionsort", "Ordenacao de selecao");
+    adicionarPalavra(palavra, "insertionsort", "Ordenacao de insercao");
+    adicionarPalavra(palavra, "javascript", "Linguagem de programacao mais usada");
+    adicionarPalavra(palavra, "lua", "Satelite natural e linguagem de programacao");
+    adicionarPalavra(palavra, "perl", "Linguagem de perola");
+    adicionarPalavra(palavra, "python", "Cobra perigosa e linguagem de programacao");
+    adicionarPalavra(palavra, "linux", "Sistema do pinguim");
+    adicionarPalavra(palavra, "windows", "Sistema das janelas");
+    adicionarPalavra(palavra, "github", "Portifolio dos programadores");
+    adicionarPalavra(palavra, "powershell", "Poder da concha");
+    adicionarPalavra(palavra, "fortran", "Uma das primeiras linguagens de programacao");
+    adicionarPalavra(palavra, "assembly", "Linguagem de maquina");
+    adicionarPalavra(palavra, "mysql", "Meu banco de dados");
+    adicionarPalavra(palavra, "ciberseguranca", "Mantem seus dados seguros");
+    adicionarPalavra(palavra, "django", "Framework de python para web");
+    adicionarPalavra(palavra, "haskell", "Linguagem recursiva");
+    adicionarPalavra(palavra, "portugol", "Pseudolinguagem introdutoria");
+    adicionarPalavra(palavra, "lovelace", "Mulher muito importante para a computacao");
     //ordenando lista
     insertionSortList(palavra);
 }
