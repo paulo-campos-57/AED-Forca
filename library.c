@@ -432,7 +432,7 @@ void adicionaChar(Caracteres** head, char character) {
 int compara(const void *a, const void *b) {
     Info *infoA = (Info *)a;
     Info *infoB = (Info *)b;
-    return infoA -> pontuacao - infoB -> pontuacao;
+    return infoB -> pontuacao - infoA -> pontuacao;
 }
 
 void lideres() {
