@@ -454,8 +454,32 @@ void lideres() {
 
     int loop = 0;
     
-    while (fscanf(arquivo, "Nome: %s, Pontuacao: %d\n", dados[loop].nome, &dados[loop].pontuacao) == 2) {
-        loop++;
+    char linha[200];
+    while (fgets(linha, sizeof(linha), arquivo) != NULL) {
+        char *nome_inicio = strstr(linha, "Nome: ");
+        char *pontuacao_inicio = strstr(linha, "Pontuacao: ");
+
+        if (nome_inicio && pontuacao_inicio) {
+            nome_inicio += 6;
+            pontuacao_inicio += 11;
+
+            char *virgula_nome = strchr(nome_inicio, ',');
+            if (virgula_nome) {
+                *virgula_nome = '\0';
+            }
+
+            char *virgula = strchr(pontuacao_inicio, ',');
+            if (virgula) {
+                *virgula = '\0';
+            }
+
+            int pontuacao;
+            if (sscanf(pontuacao_inicio, "%d", &pontuacao) == 1) {
+                strncpy(dados[loop].nome, nome_inicio, sizeof(dados[loop].nome));
+                dados[loop].pontuacao = pontuacao;
+                loop++;
+            }
+        }
 
         if (loop >= capacidade) {
             capacidade *= 2;
@@ -469,12 +493,14 @@ void lideres() {
 
     fclose(arquivo);
 
-    qsort(dados, loop, sizeof(Info), compara);
-
-    printf("Ranking de jogadores\n");
-    for (int i = 0; i < loop; i++) {
-        printf("Nome: %s, Pontuacao: %d\n", dados[i].nome, dados[i].pontuacao);
+    if (loop == 0) {
+        printf("Ainda nao tem jogadores registrados.\n");
+    } else {
+        qsort(dados, loop, sizeof(Info), compara);
+        printf("Ranking de jogadores\n");
+        for (int i = 0; i < loop; i++) {
+            printf("Nome: %s, Pontuacao: %d\n", dados[i].nome, dados[i].pontuacao);
+        }
     }
-
     free(dados);
 }
