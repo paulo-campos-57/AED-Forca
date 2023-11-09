@@ -66,6 +66,7 @@ void desenhaForca(int erros) {
 }
 
 void venceu(char *nome){
+    printf("\033[1;33m"); 
     printf("\nParabens %s, você ganhou!\n\n", nome);
 
     printf("       ___________      \n");
@@ -78,11 +79,12 @@ void venceu(char *nome){
     printf("           ) (          \n");
     printf("         _.' '._        \n");
     printf("        '-------'       \n\n");
+    printf("\033[0m");
 }
 
 void perdeu(char *nome){
+    printf("\033[1;31m");
     printf("\nPuxa %s, você foi enforcado!\n\n", nome);
-
     printf("    _______________         \n");
     printf("   /               \\       \n"); 
     printf("  /                 \\      \n");
@@ -99,6 +101,7 @@ void perdeu(char *nome){
     printf("   \\_            _/       \n");
     printf("     \\_        _/         \n");
     printf("       \\______/           \n");
+    printf("\033[0m");
 }
 /*---------------------------------------------------------------------------------------*/
 
