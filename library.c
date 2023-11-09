@@ -214,6 +214,8 @@ void jogoDupla(char *j1, char *j2) {
         char palavraAdivinhada[strlen(pl) + 1];
         memset(palavraAdivinhada, '_', strlen(pl));
         palavraAdivinhada[strlen(pl)] = '\0';
+        char letrasArriscadas[MAX_TENTATIVAS];
+        int tentativas = 0;
         
         printf("\nAgora informe a dica: ");
         scanf(" %[^\n]", d);
@@ -237,6 +239,19 @@ void jogoDupla(char *j1, char *j2) {
             if (isalpha(letra)) {
                 letra = tolower(letra);
             }
+
+            // Verifica se a letra já foi arriscada
+            if (letraJaArriscada(letra, letrasArriscadas) != 0) {
+                printf("Voce ja arriscou essa letra. Tente outra!\n");
+                sleep(1);
+                limpaTela();
+                continue;
+            }
+
+            letrasArriscadas[tentativas] = letra;
+            letrasArriscadas[tentativas + 1] = '\0';
+            tentativas++;
+
             if (adivinharLetra(caracter, palavraAdivinhada, letra)) {
                 printf("Letra correta!\n");
                 acertos++;
