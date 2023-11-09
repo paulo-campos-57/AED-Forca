@@ -133,6 +133,11 @@ void jogoSolo(char *nome) {
             printf("Sua dica: %s\n", palavrasecreta->dica);
             printf("Tente acertar a palavra secreta: %s\n", palavraAdivinhada);
             desenhaForca(erros);
+            printf("Letras arriscadas: [ ");
+            for (int i = 0; i < tentativas; i++) {
+                printf("%c ", letrasArriscadas[i]);
+            }
+            printf("]\n");
             printf("\nArrisque uma letra: ");
             char letra;
             scanf(" %c", &letra);
@@ -233,6 +238,11 @@ void jogoDupla(char *j1, char *j2) {
             printf("Pontuacao %s: %d\n", j2, j2Pontos);
             printf("Dica: %s\n", d);
             printf("\nTente acertar a palavra: %s\n", palavraAdivinhada);
+            printf("Letras arriscadas: [ ");
+            for (int i = 0; i < tentativas; i++) {
+                printf("%c ", letrasArriscadas[i]);
+            }
+            printf("]\n");
             printf("\nArrisque uma letra: ");
             char letra;
             scanf(" %c", &letra);
