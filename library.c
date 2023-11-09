@@ -26,6 +26,7 @@ void pausa() {
 
 // Funções de interface
 void telaInicial() {
+    printf("\033[1;32m");
     printf(" __________    _________     _______     ________      _________\n");
     printf("|  ________|  |  _____  |   |  ___  |   |  ______|    |  _____  |\n");
     printf("| |______     | |     | |   | |___|_|   | |           | |     | |\n");
@@ -33,6 +34,7 @@ void telaInicial() {
     printf("| |           | |     | |   | ||_|_     | |          |  _______  |\n");
     printf("| |           | |_____| |   | |  |_|_   | |______    | |       | |\n");
     printf("|_|           |_________|   |_|    |_|  |________|   |_|       |_|\n");
+    printf("\033[0m");
     printf("\n");
 }
 
@@ -570,7 +572,21 @@ void lideres() {
         qsort(dados, loop, sizeof(Info), compara);
         printf("Ranking de jogadores\n");
         for (int i = 0; i < loop; i++) {
-            printf("Nome: %s, Pontuacao: %d\n", dados[i].nome, dados[i].pontuacao);
+            if (i == 0) {
+                printf("\033[1;33m"); // Amarelo brilhante
+                printf("1 - Nome: %s, Pontuacao: %d\n", dados[i].nome, dados[i].pontuacao);
+                printf("\033[0m"); // Volta para cor padrão
+            } else if (i == 1) {
+                printf("\033[1;30m"); // Cinza brilhante
+                printf("2 - Nome: %s, Pontuacao: %d\n", dados[i].nome, dados[i].pontuacao);
+                printf("\033[0m"); // Volta para cor padrão
+            } else if (i == 2) {
+                printf("\033[1;31m"); // Vermelho brilhante
+                printf("3 - Nome: %s, Pontuacao: %d\n", dados[i].nome, dados[i].pontuacao);
+                printf("\033[0m"); // Volta para cor padrão
+            } else {
+                printf("Nome: %s, Pontuacao: %d\n", dados[i].nome, dados[i].pontuacao);
+            }
         }
     }
     free(dados);
