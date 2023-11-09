@@ -123,6 +123,8 @@ void jogoSolo(char *nome) {
         memset(palavraAdivinhada, '_', strlen(palavrasecreta->palavra));
         palavraAdivinhada[strlen(palavrasecreta->palavra)] = '\0';
         int erros = 0, acertos = 0, tamanhoPalavra = strlen(palavrasecreta->palavra);
+        char letrasArriscadas[MAX_TENTATIVAS];
+        int tentativas = 0;
 
         printf("Seja bem-vindo, %s!\n", nome);
         printf("Sua pontuacao: %d\n", pontuacao);
@@ -137,6 +139,19 @@ void jogoSolo(char *nome) {
             if (isalpha(letra)) {
                 letra = tolower(letra);
             }
+
+            // Verifica se a letra já foi arriscada
+            if (letraJaArriscada(letra, letrasArriscadas) != 0) {
+                printf("Voce ja arriscou essa letra. Tente outra!\n");
+                sleep(1);
+                limpaTela();
+                continue;
+            }
+
+            letrasArriscadas[tentativas] = letra;
+            letrasArriscadas[tentativas + 1] = '\0';
+            tentativas++;
+
             if (adivinharLetra(caracter, palavraAdivinhada, letra)) {
                 printf("Letra correta!\n");
                 acertos++;
@@ -264,6 +279,15 @@ void jogoDupla(char *j1, char *j2) {
         limpaTela();
         vez++;
     } 
+}
+
+int letraJaArriscada(char letra, const char *letrasArriscadas) {
+    for (int i = 0; letrasArriscadas[i] != '\0'; i++) {
+        if (letrasArriscadas[i] == letra) {
+            return 1;
+        }
+    }
+    return 0;
 }
 
 void salvarPlacar(const char *nome, int pontuacao) {

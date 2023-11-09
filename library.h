@@ -2,6 +2,7 @@
 #define __LIBRARY__
 #define TAMANHO_PALAVRA 100
 #define MAX_ERROS 5
+#define MAX_TENTATIVAS 26
 
 typedef struct Palavra {
     char palavra[100];
@@ -32,6 +33,7 @@ void perdeu(char *nome);
 // Funções de jogo
 void jogoSolo(char *nome);
 void jogoDupla(char *j1, char *j2);
+int letraJaArriscada(char letra, const char *letrasArriscadas);
 void salvarPlacar(const char *nome, int pontuacao);
 void adicionarPalavra(Palavra **palavras, char *pl, char *d);
 int sizeList(Palavra * Palavra);
