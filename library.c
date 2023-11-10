@@ -115,7 +115,6 @@ void jogoSolo(char *nome) {
         Palavra * ultimo = geraPalavrasOrdenada(&palavras);
         //ordenando lista
         quickSortList(palavras, ultimo);
-        imprimirLista(palavras);
 
         Palavra *palavrasecreta = noAleatorio(palavras);
         Caracteres *caracter = NULL;
@@ -450,6 +449,21 @@ Palavra* encontrarUltimoNo(Palavra* head) {
     }
     return head;
 }
+void insertionSort(Info *dados, int n) {
+    int i, j;
+    Info key;
+    for (i = 1; i < n; i++) {
+        key = dados[i];
+        j = i - 1;
+
+        while (j >= 0 && dados[j].pontuacao < key.pontuacao) {
+            dados[j + 1] = dados[j];
+            j = j - 1;
+        }
+        dados[j + 1] = key;
+    }
+}
+
 
 void imprimirLista(Palavra *lista) {
     while (lista) {
@@ -524,11 +538,6 @@ void adicionaChar(Caracteres** head, char character) {
 /*---------------------------------------------------------------------------------------*/
 
 // Funções de pontuação
-int compara(const void *a, const void *b) {
-    Info *infoA = (Info *)a;
-    Info *infoB = (Info *)b;
-    return infoB -> pontuacao - infoA -> pontuacao;
-}
 
 void lideres() {
     FILE *arquivo = fopen("placar.txt", "r");
@@ -591,7 +600,7 @@ void lideres() {
     if (loop == 0) {
         printf("Ainda nao tem jogadores registrados.\n");
     } else {
-        qsort(dados, loop, sizeof(Info), compara);
+        insertionSort(dados, loop);
         printf("Ranking de jogadores\n");
         for (int i = 0; i < loop; i++) {
             if (i == 0) {

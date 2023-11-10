@@ -39,6 +39,7 @@ void adicionarPalavra(Palavra **palavras, char *pl, char *d);
 int sizeList(Palavra * Palavra);
 Palavra *  geraPalavrasOrdenada(Palavra **palavra);
 Palavra *noAleatorio(Palavra *palavra);
+void insertionSort(Info *dados, int n);
 void imprimirLista(Palavra *lista);
 int adivinharLetra(Caracteres *caracter, char *palavraAdivinhada, char letra);
 void freeList(Palavra * palavra);
@@ -46,7 +47,6 @@ void adicionaChar(Caracteres** head, char character);
 void imprimirP(Caracteres *lista);
 void freeCaracteres(Caracteres *c);
 // Funções de pontuação
-int compara(const void *a, const void *b);
 void lideres();
 void swap(Palavra* a, Palavra* b);
 Palavra *partition(Palavra *low, Palavra *high);
