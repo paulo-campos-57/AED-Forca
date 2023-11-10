@@ -112,7 +112,11 @@ void jogoSolo(char *nome) {
     int pontuacao = 0;
     while (1) {
         Palavra *palavras = NULL;
-        geraPalavrasOrdenada(&palavras);
+        Palavra * ultimo = geraPalavrasOrdenada(&palavras);
+        //ordenando lista
+        quickSortList(palavras, ultimo);
+        imprimirLista(palavras);
+
         Palavra *palavrasecreta = noAleatorio(palavras);
         Caracteres *caracter = NULL;
         for (int i = 0; palavrasecreta->palavra[i] != '\0'; i++) {
@@ -348,8 +352,8 @@ int sizeList(Palavra * Palavra){
     }
     return size;
 }
-
-void geraPalavrasOrdenada(Palavra **palavra) {
+    
+Palavra *  geraPalavrasOrdenada(Palavra **palavra) {
     adicionarPalavra(palavra, "programacao", "Trabalho muito legal");
     adicionarPalavra(palavra, "matematica", "Fundamental para a vida");
     adicionarPalavra(palavra, "informatica", "O futuro da humanidade");
@@ -381,15 +385,14 @@ void geraPalavrasOrdenada(Palavra **palavra) {
     adicionarPalavra(palavra, "haskell", "Linguagem recursiva");
     adicionarPalavra(palavra, "portugol", "Pseudolinguagem introdutoria");
     adicionarPalavra(palavra, "lovelace", "Mulher muito importante para a computacao");
-    //ordenando lista
-    quickSortList(palavra);
+    return encontrarUltimoNo(*palavra);
 }
 
 Palavra *noAleatorio(Palavra *palavra) {
     int tamanho = sizeList(palavra);
     
     if (tamanho == 0) {
-        printf("Lista vazia!\n");
+        perror("Lista vazia!\n");
         return NULL; // A lista está vazia.
     }
     srand(time(NULL));
@@ -409,74 +412,44 @@ void swap(Palavra* a, Palavra* b) {
     strcpy(b->palavra, temp);
 }
 
-Palavra* partition(Palavra* head, Palavra* end, Palavra** newHead, Palavra** newEnd) {
-    Palavra* pivot = end;
-    Palavra* prev = NULL, *cur = head, *tail = pivot;
 
-    while (cur != pivot) {
-        if (strcmp(cur->palavra, pivot->palavra) < 0) {
-            if (*newHead == NULL)
-                *newHead = cur;
+Palavra *partition(Palavra *low, Palavra *high) {
+    char pivot[TAMANHO_PALAVRA];
+    strcpy(pivot, high->palavra);
 
-            prev = cur;
-            cur = cur->next;
-        }
-        else {
-            if (prev)
-                prev->next = cur->next;
+    Palavra *i = low;
 
-            Palavra* tmp = cur->next;
-            cur->next = NULL;
-            tail->next = cur;
-            tail = cur;
-            cur = tmp;
+    for (Palavra *j = low; j != high; j = j->next) {
+        if (strcmp(j->palavra, pivot) < 0) {
+            swap(i, j);
+            i = i->next;
         }
     }
-
-    if (*newHead == NULL)
-        *newHead = pivot;
-
-    *newEnd = tail;
-
-    return pivot;
+    swap(i, high);
+    return i;
 }
 
-Palavra* quickSortRecur(Palavra* head, Palavra* end) {
-    if (!head || head == end) return head;
 
-    Palavra* newHead = NULL, *newEnd = NULL;
+void quickSortList(Palavra *head, Palavra *tail) {
+    if (head >= tail || head == tail->next) {
+        return;
+    }
+    Palavra *pi = partition(head, tail);
 
-    Palavra* pivot = partition(head, end, &newHead, &newEnd);
+    quickSortList(head, pi);
+    quickSortList(pi->next, tail);
+}
 
-    if (newHead != pivot) {
-        Palavra* tmp = newHead;
-        while (tmp->next != pivot){
-            tmp = tmp->next;
-        }
-        tmp->next = NULL;
-
-        newHead = quickSortRecur(newHead, tmp);
-
-        tmp = getTail(newHead);
-        tmp->next = pivot;
+Palavra* encontrarUltimoNo(Palavra* head) {
+    if (head == NULL){
+        return NULL;
     }
 
-    pivot->next = quickSortRecur(pivot->next, newEnd);
-
-    return newHead;
-}
-
-Palavra* getTail(Palavra* head) {
-    while (head != NULL && head->next != NULL){
+    while (head->next) {
         head = head->next;
     }
     return head;
 }
-
-void quickSortList(Palavra** head) {
-    *head = quickSortRecur(*head, getTail(*head));
-}
-
 
 void imprimirLista(Palavra *lista) {
     while (lista) {
@@ -500,7 +473,7 @@ int adivinharLetra(Caracteres *caracter, char *palavraAdivinhada, char letra) {
     Caracteres *current = caracter;
     int i = 0;
 
-    while (current != NULL) {
+    while (current) {
         if (current->character == letra) {
             palavraAdivinhada[i] = letra;
             correta = 1;
