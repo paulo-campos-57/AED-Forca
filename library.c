@@ -411,7 +411,6 @@ void swap(Palavra* a, Palavra* b) {
     strcpy(b->palavra, temp);
 }
 
-
 Palavra *partition(Palavra *low, Palavra *high) {
     char pivot[TAMANHO_PALAVRA];
     strcpy(pivot, high->palavra);
@@ -428,17 +427,6 @@ Palavra *partition(Palavra *low, Palavra *high) {
     return i;
 }
 
-
-void quickSortList(Palavra *head, Palavra *tail) {
-    if (head >= tail || head == tail->next) {
-        return;
-    }
-    Palavra *pi = partition(head, tail);
-
-    quickSortList(head, pi);
-    quickSortList(pi->next, tail);
-}
-
 Palavra* encontrarUltimoNo(Palavra* head) {
     if (head == NULL){
         return NULL;
@@ -449,21 +437,6 @@ Palavra* encontrarUltimoNo(Palavra* head) {
     }
     return head;
 }
-void insertionSort(Info *dados, int n) {
-    int i, j;
-    Info key;
-    for (i = 1; i < n; i++) {
-        key = dados[i];
-        j = i - 1;
-
-        while (j >= 0 && dados[j].pontuacao < key.pontuacao) {
-            dados[j + 1] = dados[j];
-            j = j - 1;
-        }
-        dados[j + 1] = key;
-    }
-}
-
 
 void imprimirLista(Palavra *lista) {
     while (lista) {
@@ -538,7 +511,6 @@ void adicionaChar(Caracteres** head, char character) {
 /*---------------------------------------------------------------------------------------*/
 
 // Funções de pontuação
-
 void lideres() {
     FILE *arquivo = fopen("placar.txt", "r");
 
@@ -621,4 +593,31 @@ void lideres() {
         }
     }
     free(dados);
+}
+/*---------------------------------------------------------------------------------------*/
+
+// Funções de ordenação
+void insertionSort(Info *dados, int n) {
+    int i, j;
+    Info key;
+    for (i = 1; i < n; i++) {
+        key = dados[i];
+        j = i - 1;
+
+        while (j >= 0 && dados[j].pontuacao < key.pontuacao) {
+            dados[j + 1] = dados[j];
+            j = j - 1;
+        }
+        dados[j + 1] = key;
+    }
+}
+
+void quickSortList(Palavra *head, Palavra *tail) {
+    if (head >= tail || head == tail->next) {
+        return;
+    }
+    Palavra *pi = partition(head, tail);
+
+    quickSortList(head, pi);
+    quickSortList(pi->next, tail);
 }
