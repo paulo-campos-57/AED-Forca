@@ -404,40 +404,6 @@ Palavra *noAleatorio(Palavra *palavra) {
     return palavra;
 }
 
-void swap(Palavra* a, Palavra* b) {
-    char temp[TAMANHO_PALAVRA]; 
-    strcpy(temp, a->palavra);
-    strcpy(a->palavra, b->palavra);
-    strcpy(b->palavra, temp);
-}
-
-Palavra *partition(Palavra *low, Palavra *high) {
-    char pivot[TAMANHO_PALAVRA];
-    strcpy(pivot, high->palavra);
-
-    Palavra *i = low;
-
-    for (Palavra *j = low; j != high; j = j->next) {
-        if (strcmp(j->palavra, pivot) < 0) {
-            swap(i, j);
-            i = i->next;
-        }
-    }
-    swap(i, high);
-    return i;
-}
-
-Palavra* encontrarUltimoNo(Palavra* head) {
-    if (head == NULL){
-        return NULL;
-    }
-
-    while (head->next) {
-        head = head->next;
-    }
-    return head;
-}
-
 void imprimirLista(Palavra *lista) {
     while (lista) {
         printf("Palavra: %s\n", lista->palavra);
@@ -620,4 +586,38 @@ void quickSortList(Palavra *head, Palavra *tail) {
 
     quickSortList(head, pi);
     quickSortList(pi->next, tail);
+}
+
+void swap(Palavra* a, Palavra* b) {
+    char temp[TAMANHO_PALAVRA]; 
+    strcpy(temp, a->palavra);
+    strcpy(a->palavra, b->palavra);
+    strcpy(b->palavra, temp);
+}
+
+Palavra *partition(Palavra *low, Palavra *high) {
+    char pivot[TAMANHO_PALAVRA];
+    strcpy(pivot, high->palavra);
+
+    Palavra *i = low;
+
+    for (Palavra *j = low; j != high; j = j->next) {
+        if (strcmp(j->palavra, pivot) < 0) {
+            swap(i, j);
+            i = i->next;
+        }
+    }
+    swap(i, high);
+    return i;
+}
+
+Palavra* encontrarUltimoNo(Palavra* head) {
+    if (head == NULL){
+        return NULL;
+    }
+
+    while (head->next) {
+        head = head->next;
+    }
+    return head;
 }

@@ -48,6 +48,7 @@ void imprimirP(Caracteres *lista);
 void freeCaracteres(Caracteres *c);
 // Funções de pontuação
 void lideres();
+// Funções de ordenação
 void swap(Palavra* a, Palavra* b);
 Palavra *partition(Palavra *low, Palavra *high);
 void quickSortList(Palavra *low, Palavra *high);
