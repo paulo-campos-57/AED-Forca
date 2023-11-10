@@ -37,7 +37,7 @@ int letraJaArriscada(char letra, const char *letrasArriscadas);
 void salvarPlacar(const char *nome, int pontuacao);
 void adicionarPalavra(Palavra **palavras, char *pl, char *d);
 int sizeList(Palavra * Palavra);
-Palavra *  geraPalavrasOrdenada(Palavra **palavra);
+Palavra *geraPalavrasOrdenada(Palavra **palavra);
 Palavra *noAleatorio(Palavra *palavra);
 void insertionSort(Info *dados, int n);
 void imprimirLista(Palavra *lista);

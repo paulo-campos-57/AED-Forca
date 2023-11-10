@@ -224,7 +224,7 @@ void jogoDupla(char *j1, char *j2) {
         char palavraAdivinhada[strlen(pl) + 1];
         memset(palavraAdivinhada, '_', strlen(pl));
         palavraAdivinhada[strlen(pl)] = '\0';
-        char letrasArriscadas[MAX_TENTATIVAS];
+        char *letrasArriscadas[MAX_TENTATIVAS];
         
         printf("\nAgora informe a dica: ");
         scanf(" %[^\n]", d);
@@ -235,9 +235,10 @@ void jogoDupla(char *j1, char *j2) {
         pausa();
         limpaTela();
         char *outroJogador = (vez % 2 != 0) ? j2 : j1;
+        int tentativas = 0;
         printf("%s, sua vez! tente acertar a palavra secreta!\n", outroJogador);
+
         while (erros < MAX_ERROS) {
-            int tentativas = 0;
 
             desenhaForca(erros);
             printf("Pontuacao %s: %d\n", j1, j1Pontos);
@@ -245,6 +246,7 @@ void jogoDupla(char *j1, char *j2) {
             printf("Dica: %s\n", d);
             printf("\nTente acertar a palavra: %s\n", palavraAdivinhada);
             printf("Letras arriscadas: [ ");
+
             for (int i = 0; i < tentativas; i++) {
                 printf("%c ", letrasArriscadas[i]);
             }
@@ -347,7 +349,7 @@ int sizeList(Palavra * Palavra){
     return size;
 }
     
-Palavra *  geraPalavrasOrdenada(Palavra **palavra) {
+Palavra *geraPalavrasOrdenada(Palavra **palavra) {
     adicionarPalavra(palavra, "programacao", "Trabalho muito legal");
     adicionarPalavra(palavra, "matematica", "Fundamental para a vida");
     adicionarPalavra(palavra, "informatica", "O futuro da humanidade");
