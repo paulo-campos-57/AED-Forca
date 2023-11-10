@@ -172,7 +172,7 @@ void jogoSolo(char *nome) {
             if (strcmp(palavraAdivinhada, palavrasecreta->palavra) == 0) {
                 venceu(nome);
                 pontuacao++;
-                break; //ganhou
+                break;
             }
             if (erros >= MAX_ERROS) {
                 perdeu(nome);
@@ -180,6 +180,8 @@ void jogoSolo(char *nome) {
                 break;
             }
         }
+        letrasArriscadas[0] = '\0';
+        tentativas = 0;
         freeList(palavras);
         freeCaracteres(caracter);
         char continuar;
@@ -223,7 +225,6 @@ void jogoDupla(char *j1, char *j2) {
         memset(palavraAdivinhada, '_', strlen(pl));
         palavraAdivinhada[strlen(pl)] = '\0';
         char letrasArriscadas[MAX_TENTATIVAS];
-        int tentativas = 0;
         
         printf("\nAgora informe a dica: ");
         scanf(" %[^\n]", d);
@@ -236,6 +237,8 @@ void jogoDupla(char *j1, char *j2) {
         char *outroJogador = (vez % 2 != 0) ? j2 : j1;
         printf("%s, sua vez! tente acertar a palavra secreta!\n", outroJogador);
         while (erros < MAX_ERROS) {
+            int tentativas = 0;
+
             desenhaForca(erros);
             printf("Pontuacao %s: %d\n", j1, j1Pontos);
             printf("Pontuacao %s: %d\n", j2, j2Pontos);
@@ -276,20 +279,12 @@ void jogoDupla(char *j1, char *j2) {
             limpaTela();
             if (strcmp(palavraAdivinhada, pl) == 0) {
                 venceu(outroJogador);
-                if (vez %2 == 0) {
-                    j1Pontos++;
-                } else {
-                    j2Pontos++;
-                }
+                (vez % 2 == 0) ? j1Pontos++ : j2Pontos++;
                 break;
             }
             if (erros >= MAX_ERROS) {
                 perdeu(outroJogador);
-                if (vez %2 == 0) {
-                    j2Pontos++;
-                } else {
-                    j1Pontos++;
-                }
+                (vez % 2 == 0) ? j2Pontos++ : j1Pontos++;
                 break;
             }
         }
