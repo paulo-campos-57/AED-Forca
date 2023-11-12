@@ -181,7 +181,6 @@ void jogoSolo(char *nome) {
             }
         }
         letrasArriscadas[0] = '\0';
-        tentativas = 0;
         freeList(palavras);
         freeCaracteres(caracter);
         char continuar;
@@ -224,7 +223,7 @@ void jogoDupla(char *j1, char *j2) {
         char palavraAdivinhada[strlen(pl) + 1];
         memset(palavraAdivinhada, '_', strlen(pl));
         palavraAdivinhada[strlen(pl)] = '\0';
-        char *letrasArriscadas[MAX_TENTATIVAS];
+        char letrasArriscadas[MAX_TENTATIVAS];
         
         printf("\nAgora informe a dica: ");
         scanf(" %[^\n]", d);
