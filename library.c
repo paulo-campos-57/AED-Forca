@@ -110,6 +110,7 @@ void perdeu(char *nome){
 // Funções de jogo
 void jogoSolo(char *nome) {
     int pontuacao = 0;
+    char letrasArriscadas[MAX_TENTATIVAS]; //mudou o escopo
     while (1) {
         Palavra *palavras = NULL;
         Palavra * ultimo = geraPalavrasOrdenada(&palavras);
@@ -126,7 +127,8 @@ void jogoSolo(char *nome) {
         memset(palavraAdivinhada, '_', strlen(palavrasecreta->palavra));
         palavraAdivinhada[strlen(palavrasecreta->palavra)] = '\0';
         int erros = 0, acertos = 0, tamanhoPalavra = strlen(palavrasecreta->palavra);
-        char letrasArriscadas[MAX_TENTATIVAS];
+        //adicionou o memset
+        memset(letrasArriscadas, 0, sizeof(letrasArriscadas));
         int tentativas = 0;
 
         printf("Seja bem-vindo, %s!\n", nome);
