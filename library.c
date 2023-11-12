@@ -110,12 +110,14 @@ void perdeu(char *nome){
 // Funções de jogo
 void jogoSolo(char *nome) {
     int pontuacao = 0;
-    char letrasArriscadas[MAX_TENTATIVAS]; //mudou o escopo
+    char letrasArriscadas[MAX_TENTATIVAS];
+    Palavra *palavras = NULL;
     while (1) {
-        Palavra *palavras = NULL;
-        Palavra * ultimo = geraPalavrasOrdenada(&palavras);
-        //ordenando lista
-        quickSortList(palavras, ultimo);
+        //gerando e ordenando lista
+        if (palavras == NULL) {
+            Palavra *ultimo = geraPalavrasOrdenada(&palavras);
+            quickSortList(palavras, ultimo);
+        }
 
         Palavra *palavrasecreta = noAleatorio(palavras);
         Caracteres *caracter = NULL;
@@ -126,15 +128,14 @@ void jogoSolo(char *nome) {
         char palavraAdivinhada[strlen(palavrasecreta->palavra) + 1];
         memset(palavraAdivinhada, '_', strlen(palavrasecreta->palavra));
         palavraAdivinhada[strlen(palavrasecreta->palavra)] = '\0';
-        int erros = 0, acertos = 0, tamanhoPalavra = strlen(palavrasecreta->palavra);
-        //adicionou o memset
+
+        int erros = 0, acertos = 0, tentativas = 0, tamanhoPalavra = strlen(palavrasecreta->palavra);
+
         memset(letrasArriscadas, 0, sizeof(letrasArriscadas));
-        int tentativas = 0;
 
         printf("Seja bem-vindo, %s!\n", nome);
 
         while (erros < MAX_ERROS) {
-
             desenhaForca(erros);
             printf("Sua pontuacao: %d\n", pontuacao);
             printf("Sua dica: %s\n", palavrasecreta->dica);
@@ -179,20 +180,21 @@ void jogoSolo(char *nome) {
             }
             if (erros >= MAX_ERROS) {
                 perdeu(nome);
-                printf("\n\nA palavra era %s\n", palavrasecreta -> palavra);
+                printf("\n\nA palavra era %s\n", palavrasecreta->palavra);
                 break;
             }
         }
-        freeList(palavras);
-        freeCaracteres(caracter);
         char continuar;
         printf("\nDeseja continuar jogando?\n[S - sim/N - nao]\n");
         scanf(" %c", &continuar);
         continuar = toupper(continuar);
         if (continuar != 'S') {
             salvarPlacar(nome, pontuacao);
+            freeCaracteres(caracter);
+            freeList(palavras);
             break;
         }
+
         limpaTela();
     }
 }
