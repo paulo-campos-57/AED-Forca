@@ -130,12 +130,13 @@ void jogoSolo(char *nome) {
         int tentativas = 0;
 
         printf("Seja bem-vindo, %s!\n", nome);
-        printf("Sua pontuacao: %d\n", pontuacao);
 
         while (erros < MAX_ERROS) {
+
+            desenhaForca(erros);
+            printf("Sua pontuacao: %d\n", pontuacao);
             printf("Sua dica: %s\n", palavrasecreta->dica);
             printf("Tente acertar a palavra secreta: %s\n", palavraAdivinhada);
-            desenhaForca(erros);
             printf("Letras arriscadas: [ ");
             for (int i = 0; i < tentativas; i++) {
                 printf("%c ", letrasArriscadas[i]);
@@ -180,7 +181,6 @@ void jogoSolo(char *nome) {
                 break;
             }
         }
-        letrasArriscadas[0] = '\0';
         freeList(palavras);
         freeCaracteres(caracter);
         char continuar;
@@ -435,7 +435,7 @@ int adivinharLetra(Caracteres *caracter, char *palavraAdivinhada, char letra) {
 
 void freeList(Palavra * palavra) {
     while (palavra) {
-        Palavra* temp =palavra;
+        Palavra* temp = palavra;
         palavra = palavra->next;
         free(temp);
     }
@@ -443,7 +443,7 @@ void freeList(Palavra * palavra) {
 
 void freeCaracteres(Caracteres *c){
     while (c) {
-        Caracteres* temp= c;
+        Caracteres* temp = c;
         c = c -> next;
         free(temp);
     }
