@@ -322,8 +322,8 @@ void salvarPlacar(const char *nome, int pontuacao) {
     FILE *arquivo = fopen("placar.txt", "a"); 
 
     if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo de placar.\n");
-        return;
+        perror("Erro ao abrir o arquivo de placar.\n");
+        exit(EXIT_FAILURE);
     }
 
     fprintf(arquivo, "Nome: %s, Pontuacao: %d\n", nome, pontuacao);
@@ -334,7 +334,7 @@ void salvarPlacar(const char *nome, int pontuacao) {
 void adicionarPalavra(Palavra **palavras, char *pl, char *d) {
     Palavra *novaPalavra = (Palavra *)malloc(sizeof(Palavra));
     if (novaPalavra == NULL) {
-        printf("Erro na alocacao de memoria.\n");
+        perror("Erro na alocacao de memoria.\n");
         exit(EXIT_FAILURE);
     }
     strcpy(novaPalavra -> palavra, pl);
@@ -391,7 +391,7 @@ Palavra *noAleatorio(Palavra *palavra) {
     int tamanho = sizeList(palavra);
     
     if (tamanho == 0) {
-        perror("Lista vazia!\n");
+        printf("Lista vazia!\n");
         return NULL; // A lista está vazia.
     }
     srand(time(NULL));
@@ -457,7 +457,7 @@ void adicionaChar(Caracteres** head, char character) {
     Caracteres* newChar =(Caracteres*) malloc(sizeof(Caracteres));
 
     if (newChar == NULL) {
-        // Handle memory allocation error
+        perror("Erro na alocacao de caracter.\n");
         exit(EXIT_FAILURE);
     }
 
