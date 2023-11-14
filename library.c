@@ -69,7 +69,7 @@ void desenhaForca(int erros) {
 
 void venceu(char *nome){
     printf("\033[1;33m"); 
-    printf("\nParabens %s, você ganhou!\n\n", nome);
+    printf("\nParabens %s, voce ganhou!\n\n", nome);
 
     printf("       ___________      \n");
     printf("      '._==_==_=_.'     \n");
@@ -86,7 +86,7 @@ void venceu(char *nome){
 
 void perdeu(char *nome){
     printf("\033[1;31m");
-    printf("\nPuxa %s, você foi enforcado!\n\n", nome);
+    printf("\nPuxa %s, voce foi enforcado!\n\n", nome);
     printf("    _______________         \n");
     printf("   /               \\       \n"); 
     printf("  /                 \\      \n");
@@ -205,8 +205,8 @@ void jogoSolo(char *nome) {
 void jogoDupla(char *j1, char *j2) {
     printf("Jogador 1: %s\n", j1);
     printf("Jogador 2: %s\n", j2);
-    char pl[100];
-    char d[150];
+    char palavra[100];
+    char dica[150];
     pausa();
     limpaTela();
     int vez = 1;
@@ -217,27 +217,27 @@ void jogoDupla(char *j1, char *j2) {
         Caracteres *caracter = NULL;
         jogadorVez = (vez % 2 != 0) ? j1 : j2;
         printf("%s, informe a palavra secreta: ", jogadorVez);
-        scanf(" %[^\n]", pl);
+        scanf(" %[^\n]", palavra);
         
-        if (pl[strlen(pl) - 1] == '\n') {
-            pl[strlen(pl) - 1] = '\0';
+        if (palavra[strlen(palavra) - 1] == '\n') {
+            palavra[strlen(palavra) - 1] = '\0';
         }
         
-        for (int i = 0; pl[i] != '\0'; i++) {
-            adicionaChar(&caracter, pl[i]);
+        for (int i = 0; palavra[i] != '\0'; i++) {
+            adicionaChar(&caracter, palavra[i]);
         }
         
-        char palavraAdivinhada[strlen(pl) + 1];
-        memset(palavraAdivinhada, '_', strlen(pl));
-        palavraAdivinhada[strlen(pl)] = '\0';
+        char palavraAdivinhada[strlen(palavra) + 1];
+        memset(palavraAdivinhada, '_', strlen(palavra));
+        palavraAdivinhada[strlen(palavra)] = '\0';
         char letrasArriscadas[MAX_TENTATIVAS];
         
         printf("\nAgora informe a dica: ");
-        scanf(" %[^\n]", d);
+        scanf(" %[^\n]", dica);
         printf("Palavra adicionada!\n");
         int erros = 0;
         int acertos = 0;
-        int tamanhoPalavra = strlen(pl);
+        int tamanhoPalavra = strlen(palavra);
         pausa();
         limpaTela();
         char *outroJogador = (vez % 2 != 0) ? j2 : j1;
@@ -249,7 +249,7 @@ void jogoDupla(char *j1, char *j2) {
             desenhaForca(erros);
             printf("Pontuacao %s: %d\n", j1, j1Pontos);
             printf("Pontuacao %s: %d\n", j2, j2Pontos);
-            printf("Dica: %s\n", d);
+            printf("Dica: %s\n", dica);
             printf("\nTente acertar a palavra: %s\n", palavraAdivinhada);
             printf("Letras arriscadas: [ ");
 
@@ -288,7 +288,7 @@ void jogoDupla(char *j1, char *j2) {
             }
             sleep(1);
             limpaTela();
-            if (strcmp(palavraAdivinhada, pl) == 0) {
+            if (strcmp(palavraAdivinhada, palavra) == 0) {
                 venceu(outroJogador);
                 (vez % 2 == 0) ? j1Pontos++ : j2Pontos++;
                 break;
@@ -300,7 +300,7 @@ void jogoDupla(char *j1, char *j2) {
             }
         }
         freeCaracteres(caracter);
-        printf("A palavra era %s\n", pl);
+        printf("A palavra era %s\n", palavra);
         char continuar;
         printf("\nDesejam continuar jogando?\n[S - sim/N - nao]\n");
         scanf(" %c", &continuar);
@@ -328,8 +328,8 @@ void salvarPlacar(const char *nome, int pontuacao) {
     FILE *arquivo = fopen("placar.txt", "a"); 
 
     if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo de placar.\n");
-        return;
+        perror("Erro ao abrir o arquivo de placar.\n");
+        exit(EXIT_FAILURE);
     }
 
     fprintf(arquivo, "Nome: %s, Pontuacao: %d\n", nome, pontuacao);
@@ -340,7 +340,7 @@ void salvarPlacar(const char *nome, int pontuacao) {
 void adicionarPalavra(Palavra **palavras, char *pl, char *d) {
     Palavra *novaPalavra = (Palavra *)malloc(sizeof(Palavra));
     if (novaPalavra == NULL) {
-        printf("Erro na alocacao de memoria.\n");
+        perror("Erro na alocacao de memoria.\n");
         exit(EXIT_FAILURE);
     }
     strcpy(novaPalavra -> palavra, pl);
@@ -397,7 +397,7 @@ Palavra *noAleatorio(Palavra *palavra) {
     int tamanho = sizeList(palavra);
     
     if (tamanho == 0) {
-        perror("Lista vazia!\n");
+        printf("Lista vazia!\n");
         return NULL; // A lista está vazia.
     }
     srand(time(NULL));
@@ -463,7 +463,7 @@ void adicionaChar(Caracteres** head, char character) {
     Caracteres* newChar =(Caracteres*) malloc(sizeof(Caracteres));
 
     if (newChar == NULL) {
-        // Handle memory allocation error
+        perror("Erro na alocacao de caracter.\n");
         exit(EXIT_FAILURE);
     }
 
