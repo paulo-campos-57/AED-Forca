@@ -145,6 +145,9 @@ void jogoSolo(char *nome) {
                 printf("%c ", letrasArriscadas[i]);
             }
             printf("]\n");
+            if (erros == MAX_ERROS - 1) {
+                printf("\nCuidado! Essa eh a sua ultima chance!\n");
+            }
             printf("\nArrisque uma letra: ");
             char letra;
             scanf(" %c", &letra);
@@ -254,6 +257,9 @@ void jogoDupla(char *j1, char *j2) {
                 printf("%c ", letrasArriscadas[i]);
             }
             printf("]\n");
+            if (erros == MAX_ERROS - 1) {
+                printf("\nCuidado! Essa eh a sua ultima chance!\n");
+            }
             printf("\nArrisque uma letra: ");
             char letra;
             scanf(" %c", &letra);
