@@ -39,7 +39,7 @@ void telaInicial() {
 }
 
 void menu() {
-    printf("Selecione uma das opções e pressione ENTER\n");
+    printf("Selecione uma das opcoes e pressione ENTER\n");
     printf("1 - Jogar sozinho\n");
     printf("2 - Jogar em dupla\n");
     printf("3 - Placares de lideres\n");
@@ -139,6 +139,7 @@ void jogoSolo(char *nome) {
             desenhaForca(erros);
             printf("Sua pontuacao: %d\n", pontuacao);
             printf("Sua dica: %s\n", palavrasecreta->dica);
+            printf("A palavra tem %ld letras.\n", strlen(palavraAdivinhada));
             printf("Tente acertar a palavra secreta: %s\n", palavraAdivinhada);
             printf("Letras arriscadas: [ ");
             for (int i = 0; i < tentativas; i++) {
@@ -146,7 +147,7 @@ void jogoSolo(char *nome) {
             }
             printf("]\n");
             if (erros == MAX_ERROS - 1) {
-                printf("\nCuidado! Essa eh a sua ultima chance!\n");
+                printf("\nCuidado %s! Voce nao pode mair errar!\n", nome);
             }
             printf("\nArrisque uma letra: ");
             char letra;
@@ -250,6 +251,7 @@ void jogoDupla(char *j1, char *j2) {
             printf("Pontuacao %s: %d\n", j1, j1Pontos);
             printf("Pontuacao %s: %d\n", j2, j2Pontos);
             printf("Dica: %s\n", dica);
+            printf("Quantidade de letras %ld\n", strlen(palavraAdivinhada));
             printf("\nTente acertar a palavra: %s\n", palavraAdivinhada);
             printf("Letras arriscadas: [ ");
 
@@ -258,7 +260,7 @@ void jogoDupla(char *j1, char *j2) {
             }
             printf("]\n");
             if (erros == MAX_ERROS - 1) {
-                printf("\nCuidado! Essa eh a sua ultima chance!\n");
+                printf("\nCuidado %s! Voce nao pode mair errar!\n", outroJogador);
             }
             printf("\nArrisque uma letra: ");
             char letra;
