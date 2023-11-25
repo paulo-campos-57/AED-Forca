@@ -147,7 +147,7 @@ void jogoSolo(char *nome) {
             }
             printf("]\n");
             if (erros == MAX_ERROS - 1) {
-                printf("\nCuidado %s! Voce nao pode mair errar!\n", nome);
+                printf("\nCuidado %s! Voce nao pode mais errar!\n", nome);
             }
             printf("\nArrisque uma letra: ");
             char letra;
@@ -260,7 +260,7 @@ void jogoDupla(char *j1, char *j2) {
             }
             printf("]\n");
             if (erros == MAX_ERROS - 1) {
-                printf("\nCuidado %s! Voce nao pode mair errar!\n", outroJogador);
+                printf("\nCuidado %s! Voce nao pode mais errar!\n", outroJogador);
             }
             printf("\nArrisque uma letra: ");
             char letra;
