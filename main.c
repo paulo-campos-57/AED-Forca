@@ -7,9 +7,9 @@ int main() {
     limpaTela();
     int op;
     char nome1[50], nome2[50];
-    telaInicial();
-    printf("Seja bem-vindo!!!\n");
     do {
+        telaInicial();
+        printf("Seja bem-vindo!!!\n");
         menu();
         scanf("%d", &op);
         limpaTela();
